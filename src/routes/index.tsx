@@ -1,24 +1,79 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { HeroBanner } from "@/components/site/Hero";
+import { PromoStrip } from "@/components/site/PromoStrip";
+// TrustBar e Categories removidos a pedido do cliente
+import { FeaturedProducts } from "@/components/site/FeaturedProducts";
+import { BestSellersWeek } from "@/components/site/BestSellersWeek";
+import { CategoriesPremium } from "@/components/site/CategoriesPremium";
+import { BenefitsRow } from "@/components/site/BenefitsRow";
+import { BeforeAfter } from "@/components/site/BeforeAfter";
+import { CategoryBanners } from "@/components/site/CategoryBanners";
+import { DiscountsGrid } from "@/components/site/DiscountsGrid";
+import { Testimonials } from "@/components/site/Testimonials";
+import { Newsletter } from "@/components/site/Newsletter";
+import { Footer } from "@/components/site/Footer";
+import { AutomationSection } from "@/components/site/AutomationSection";
+import { MosquitoSection } from "@/components/site/MosquitoSection";
+import { RoomSimulator } from "@/components/site/RoomSimulator";
+import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Ágil Persianas — Persianas e Cortinas sob Medida" },
+      {
+        name: "description",
+        content:
+          "Persianas, cortinas e toldos sob medida com tecidos premium. Envio para todo o Brasil, parcelamento em até 6× sem juros.",
+      },
+      { property: "og:title", content: "Ágil Persianas — Luz, Forma e Função" },
+      {
+        property: "og:description",
+        content:
+          "Coleção 2026: persianas e cortinas sob medida com tecidos premium.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  useRevealOnScroll();
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <main>
+        {/* 1) Hero Banner — PRIMEIRA seção abaixo do header */}
+        <HeroBanner />
+        {/* 2) Faixa laranja com benefícios — logo abaixo do banner */}
+        <PromoStrip />
+        {/* 3) ⭐ SIMULADOR IA — instala a persiana na foto da janela do cliente */}
+        <RoomSimulator />
+        {/* 5) Produtos em destaque */}
+        <FeaturedProducts />
+        {/* 5b) Mais vendidas essa semana */}
+        <BestSellersWeek />
+        {/* 6) Categorias premium */}
+        <CategoriesPremium />
+        {/* Selos de confiança / benefícios premium */}
+        <BenefitsRow />
+        {/* Banners promo dupla */}
+        <CategoryBanners />
+        {/* Antes & Depois — prova social visual */}
+        <BeforeAfter />
+        {/* Tela mosquiteira */}
+        <MosquitoSection />
+        {/* Automação residencial */}
+        <AutomationSection />
+        {/* Descontos */}
+        <DiscountsGrid />
+        {/* Prova social */}
+        <Testimonials />
+        {/* Newsletter cupom */}
+        <Newsletter />
+      </main>
+      <Footer />
     </div>
   );
 }

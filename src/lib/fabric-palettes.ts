@@ -1,0 +1,83 @@
+/**
+ * Paletas de cores reais dos tecidos da Ágil Persianas.
+ * Mapeamento por modelo/tecido — usado no Simulador de Ambiente
+ * para garantir que o cliente veja exatamente as cores disponíveis
+ * para cada produto (em vez de cores genéricas).
+ */
+
+export type FabricColor = {
+  name: string;
+  hex: string;
+  /** Caminho público para a foto da amostra real (quando houver). */
+  swatch?: string;
+};
+
+/** Texturizado / Translúcida (rolô, romana, painel) — exceto Tecido Liso. */
+export const TEXTURIZADO: FabricColor[] = [
+  { name: "Branco", hex: "#F4F0E7", swatch: "/fabrics/tex-branco.png" },
+  { name: "Off-white", hex: "#EDE9DD", swatch: "/fabrics/tex-offwhite.png" },
+  { name: "Bege", hex: "#D9C7A9", swatch: "/fabrics/tex-bege.png" },
+  { name: "Verde Claro", hex: "#DDE3D6", swatch: "/fabrics/tex-verde-claro.png" },
+  { name: "Cinza", hex: "#A8AEB3", swatch: "/fabrics/tex-cinza.png" },
+];
+
+/** Cortina Rolô Blackout — Tecido Liso (Pinpoint). */
+export const PINPOINT: FabricColor[] = [
+  { name: "Branco", hex: "#F1ECE0", swatch: "/fabrics/pin-branco.jpeg" },
+  { name: "Bege", hex: "#C9B58E", swatch: "/fabrics/pin-bege.jpeg" },
+  { name: "Cinza", hex: "#A5A5A0", swatch: "/fabrics/pin-cinza.jpeg" },
+  { name: "Marrom", hex: "#6B5A45", swatch: "/fabrics/pin-marrom.jpeg" },
+  { name: "Preto", hex: "#1A1A1A", swatch: "/fabrics/pin-preto.jpeg" },
+];
+
+/** Tela Solar — todos os modelos (rolô, romana, painel). */
+export const TELA_SOLAR: FabricColor[] = [
+  { name: "Branco", hex: "#E8E4D6", swatch: "/fabrics/pin-branco.jpeg" },
+  { name: "Bege", hex: "#C2AE84", swatch: "/fabrics/pin-bege.jpeg" },
+  { name: "Cinza", hex: "#8C8C88", swatch: "/fabrics/pin-cinza.jpeg" },
+  { name: "Bronze", hex: "#5C4A36", swatch: "/fabrics/pin-marrom.jpeg" },
+  { name: "Grafite", hex: "#2A2D30", swatch: "/fabrics/pin-preto.jpeg" },
+];
+
+/** União de todas as opções — usada para Vedação Total. */
+export const VEDACAO_TOTAL: FabricColor[] = (() => {
+  const seen = new Set<string>();
+  const out: FabricColor[] = [];
+  for (const c of [...TEXTURIZADO, ...PINPOINT, ...TELA_SOLAR]) {
+    const key = c.name.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(c);
+  }
+  return out;
+})();
+
+function norm(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+/**
+ * Decide qual paleta usar a partir do nome (e descrição) do produto.
+ * Se nada bater, retorna `null` para o caller usar o fallback do banco.
+ */
+export function paletteFor(productName: string, extra?: string): FabricColor[] | null {
+  const t = norm(`${productName} ${extra ?? ""}`);
+
+  // Vedação Total é o mais permissivo — mostra tudo.
+  if (t.includes("vedacao") || t.includes("vedação")) return VEDACAO_TOTAL;
+
+  // Tela Solar / Solar Screen (todos os modelos).
+  if (t.includes("tela solar") || t.includes("solar")) return TELA_SOLAR;
+
+  // Tecido Liso / Pinpoint (apenas no Rolô Blackout Tecido Liso).
+  if (t.includes("tecido liso") || t.includes("pinpoint") || t.includes("liso"))
+    return PINPOINT;
+
+  // Texturizado e Translúcida nos modelos rolô / romana / painel.
+  if (t.includes("texturizado") || t.includes("translucid")) return TEXTURIZADO;
+
+  return null;
+}

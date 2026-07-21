@@ -175,8 +175,8 @@ export function CategoryNav() {
                   </button>
                 ) : (
                   <Link
-                    to="/catalogo"
-                    search={{ categoria: cat.slug }}
+                    to="/categoria/$slug"
+                    params={{ slug: cat.slug }}
                     className="inline-flex h-12 items-center gap-1.5 px-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground/85 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
                   >
                     {cat.name}
@@ -207,8 +207,8 @@ export function CategoryNav() {
                     {/* Header laranja em maiúsculas — estilo imagem de referência */}
                     <Link
                       data-mega-link
-                      to="/catalogo"
-                      search={{ categoria: sub.slug }}
+                      to="/categoria/$slug"
+                      params={{ slug: sub.slug }}
                       onClick={closeAll}
                       className="block text-[11px] font-bold uppercase tracking-[0.16em] text-primary hover:underline focus-visible:underline focus-visible:outline-none"
                     >
@@ -219,8 +219,8 @@ export function CategoryNav() {
                         {subGrand.map((g) => (
                           <li key={g.id}>
                             <Link
-                              to="/catalogo"
-                              search={{ categoria: g.slug }}
+                              to="/categoria/$slug"
+                              params={{ slug: g.slug }}
                               onClick={closeAll}
                               className="block truncate text-[14px] text-foreground/85 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
                             >
@@ -236,8 +236,8 @@ export function CategoryNav() {
             </div>
             <div className="border-t border-border/60 py-3 text-right">
               <Link
-                to="/catalogo"
-                search={{ categoria: openCat.slug }}
+                to="/categoria/$slug"
+                params={{ slug: openCat.slug }}
                 onClick={closeAll}
                 className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.16em] text-primary hover:underline"
               >

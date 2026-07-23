@@ -236,6 +236,7 @@ function StepHeader({ n, title }: { n: number; title: string }) {
 function RoomSimulatorInner() {
   const fileRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
+  const runSimulate = useServerFn(simulateRoom);
   const [original, setOriginal] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -462,21 +463,20 @@ function RoomSimulatorInner() {
     setLoading(true);
     setResult(null);
     try {
-      const { data, error } = await supabase.functions.invoke("simulate-room", {
-        body: {
+      const data = await runSimulate({
+        data: {
           imageDataUrl: original,
           product: product.name,
           color: color.color,
           ambient: category?.label ?? "",
         },
       });
-      if (error) throw error;
       if (data?.imageUrl) {
         setResult(data.imageUrl);
         setCompare(50);
         toast.success("Simulação pronta!");
       } else if (data?.error) {
-        // Edge function devolveu erro tratado (rate limit, sem créditos, etc).
+        // Server function devolveu erro tratado (rate limit, sem créditos, etc).
         toast.error(data.error);
         // Fallback: compositor canvas para o cliente não ficar sem prévia.
         const url = await composeSimulation(original, product.cover, color.hex);

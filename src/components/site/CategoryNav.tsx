@@ -188,51 +188,77 @@ export function CategoryNav() {
         </ul>
       </div>
 
-      {/* Mega menu clean — painel branco simples, sem backdrop pesado */}
+      {/* Mega menu — estilo referência: cards agrupados à esquerda + imagem à direita */}
       {openCat && openSubs.length > 0 && (
         <div
           id={`megamenu-${openCat.id}`}
           role="region"
           aria-label={`Submenu ${openCat.name}`}
-          className="absolute left-0 right-0 top-full z-50 border-t border-border/60 bg-background shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] animate-in fade-in slide-in-from-top-1 duration-150"
+          className="absolute left-0 right-0 top-full z-50 border-t border-border/60 bg-[#f5f5f5] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] animate-in fade-in slide-in-from-top-1 duration-150"
           onMouseEnter={cancelClose}
           onMouseLeave={() => !isMobile && scheduleClose()}
         >
           <div className="container-premium">
-            <div className="grid gap-x-10 gap-y-6 py-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-h-[min(70vh,520px)] overflow-y-auto">
-              {openSubs.map((sub) => {
-                const subGrand = childrenOf(sub.id);
-                return (
-                  <div key={sub.id} className="min-w-0">
-                    {/* Header laranja em maiúsculas — estilo imagem de referência */}
-                    <Link
-                      data-mega-link
-                      to="/categoria/$slug"
-                      params={{ slug: sub.slug }}
-                      onClick={closeAll}
-                      className="block text-[11px] font-bold uppercase tracking-[0.16em] text-primary hover:underline focus-visible:underline focus-visible:outline-none"
+            <div className="grid gap-6 py-6 lg:grid-cols-[1fr_360px] max-h-[min(75vh,560px)] overflow-y-auto">
+              {/* Coluna de subcategorias agrupadas */}
+              <div className="grid gap-3 sm:grid-cols-2">
+                {openSubs.map((sub) => {
+                  const subGrand = childrenOf(sub.id);
+                  return (
+                    <div
+                      key={sub.id}
+                      className="rounded-md bg-background border border-border/50 overflow-hidden"
                     >
-                      {sub.name}
-                    </Link>
-                    {subGrand.length > 0 && (
-                      <ul className="mt-3 space-y-1.5">
-                        {subGrand.map((g) => (
-                          <li key={g.id}>
-                            <Link
-                              to="/categoria/$slug"
-                              params={{ slug: g.slug }}
-                              onClick={closeAll}
-                              className="block truncate text-[14px] text-foreground/85 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
-                            >
-                              {g.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                );
-              })}
+                      <Link
+                        data-mega-link
+                        to="/categoria/$slug"
+                        params={{ slug: sub.slug }}
+                        onClick={closeAll}
+                        className="flex items-center justify-between gap-2 px-4 py-2.5 text-[13px] font-medium text-foreground/90 hover:text-primary focus-visible:outline-none"
+                      >
+                        <span className="truncate">{sub.name}</span>
+                        {subGrand.length > 0 && (
+                          <ChevronDown className="h-3.5 w-3.5 rotate-180 text-primary" aria-hidden />
+                        )}
+                      </Link>
+                      {subGrand.length > 0 && (
+                        <ul className="border-t border-border/50 px-4 py-2 space-y-1.5">
+                          {subGrand.map((g) => (
+                            <li key={g.id}>
+                              <Link
+                                to="/categoria/$slug"
+                                params={{ slug: g.slug }}
+                                onClick={closeAll}
+                                className="block truncate text-[13.5px] text-foreground/80 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
+                              >
+                                {g.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Imagem lateral (visível em lg+) */}
+              {openCat.icon && (
+                <Link
+                  to="/categoria/$slug"
+                  params={{ slug: openCat.slug }}
+                  onClick={closeAll}
+                  className="hidden lg:block relative overflow-hidden rounded-md bg-muted group"
+                  aria-label={`Ver ${openCat.name}`}
+                >
+                  <img
+                    src={openCat.icon}
+                    alt={openCat.name}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </Link>
+              )}
             </div>
             <div className="border-t border-border/60 py-3 text-right">
               <Link

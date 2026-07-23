@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { simulateRoom } from "@/lib/simulate-room.functions";
 import { paletteFor, type FabricColor } from "@/lib/fabric-palettes";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteContact, whatsappLink } from "@/hooks/use-site-contact";

@@ -17,6 +17,7 @@ import {
   Clock,
   Gift,
   ArrowLeftRight,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -984,56 +985,131 @@ function RoomSimulatorInner() {
           </div>
         </div>
 
-        {/* ============ DICAS PARA UMA BOA FOTO ============ */}
-        <div className="mx-auto mt-14 max-w-5xl">
-          <div className="text-center">
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">Dica</span>
-            <h3 className="font-display mt-2 text-2xl sm:text-3xl">Fotos boas ficam ainda melhores</h3>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
-              A IA identifica a janela sozinha, mas fotos como essas geram resultados mais realistas.
-            </p>
-          </div>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: Maximize2, title: "Janela inteira no quadro", desc: "Do batente ao peitoril, sem cortar as bordas." },
-              { icon: Sun, title: "Luz natural do lado", desc: "Evite contraluz forte vindo direto da janela." },
-              { icon: Camera, title: "De frente, sem inclinar", desc: "Fique perpendicular à parede para não distorcer." },
-            ].map((t, i) => {
-              const Icon = t.icon;
-              return (
-                <div key={i} className="rounded-2xl border bg-card/70 p-5 backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="mt-3 font-display text-lg">{t.title}</div>
-                  <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+        {/* ============ DICAS PARA UMA BOA FOTO — layout editorial ============ */}
+        <div className="mx-auto mt-20 max-w-6xl">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+            {/* Coluna imagem — referência visual */}
+            <div className="lg:col-span-5">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-muted">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
+                  alt="Exemplo de foto ideal: janela enquadrada e luz natural"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/10" />
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-background/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground shadow-sm backdrop-blur">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Exemplo ideal
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
+            {/* Coluna conteúdo */}
+            <div className="lg:col-span-7 lg:pt-6">
+              <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-primary">
+                Guia rápido — 3 passos
+              </span>
+              <h3 className="font-display mt-3 text-3xl leading-[1.05] sm:text-4xl lg:text-[2.75rem]">
+                Fotos boas ficam
+                <br />
+                <span className="italic text-primary">ainda melhores.</span>
+              </h3>
+              <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+                A IA identifica a janela sozinha, mas seguir essas orientações eleva o realismo da simulação a um outro patamar.
+              </p>
+
+              <ol className="mt-8 divide-y divide-border/70 border-y border-border/70">
+                {[
+                  {
+                    icon: Maximize2,
+                    title: "Janela inteira no quadro",
+                    desc: "Enquadre do topo do batente até abaixo do peitoril, sem cortar as bordas.",
+                  },
+                  {
+                    icon: Sun,
+                    title: "Luz natural do lado",
+                    desc: "Evite contraluz direto. Prefira fotografar no início da manhã ou fim da tarde.",
+                  },
+                  {
+                    icon: Camera,
+                    title: "De frente, sem inclinar",
+                    desc: "Fique perpendicular à parede para preservar as proporções do vão.",
+                  },
+                ].map((t, i) => {
+                  const Icon = t.icon;
+                  return (
+                    <li key={i} className="group grid grid-cols-[auto_1fr_auto] items-start gap-5 py-5">
+                      <span className="font-display text-2xl text-muted-foreground/60 tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <div className="font-display text-lg leading-tight">{t.title}</div>
+                        <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+                      </div>
+                      <Icon className="mt-1 h-5 w-5 text-primary/80" />
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
           </div>
         </div>
 
-        {/* ============ CTA FINAL ============ */}
-        <div className="mx-auto mt-14 max-w-4xl overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-card p-8 text-center shadow-elegant sm:p-10">
-          <h3 className="font-display text-2xl sm:text-3xl">Gostou do que viu? Vamos medir juntos.</h3>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">
-            Nossa equipe faz a medição gratuita na sua casa em Juiz de Fora e região, e o produto chega instalado.
-          </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#orcamento"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold uppercase tracking-widest text-primary-foreground shadow-glow transition hover:-translate-y-0.5"
-            >
-              Pedir orçamento gratuito
-            </a>
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-bold uppercase tracking-widest transition hover:border-primary"
-            >
-              <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
-            </a>
+        {/* ============ CTA FINAL — split editorial ============ */}
+        <div className="mx-auto mt-20 max-w-6xl overflow-hidden rounded-[4px] bg-foreground text-background shadow-elegant">
+          <div className="grid lg:grid-cols-2">
+            {/* Imagem */}
+            <div className="relative min-h-[280px] lg:min-h-[420px]">
+              <img
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80"
+                alt="Sala de estar com persianas Ágil instaladas"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-foreground/40 via-foreground/10 to-transparent lg:bg-gradient-to-l" />
+              <div className="absolute bottom-5 left-5 rounded-full bg-background/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-foreground">
+                Medição gratuita
+              </div>
+            </div>
+
+            {/* Conteúdo */}
+            <div className="relative flex flex-col justify-center gap-6 p-8 sm:p-12 lg:p-14">
+              <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-primary">
+                Próximo passo
+              </span>
+              <h3 className="font-display text-3xl leading-[1.05] sm:text-4xl lg:text-[2.5rem]">
+                Gostou do que viu?
+                <br />
+                <span className="italic text-primary">Vamos medir juntos.</span>
+              </h3>
+              <p className="max-w-md text-[15px] leading-relaxed text-background/75">
+                Nossa equipe faz a medição gratuita na sua casa em Juiz de Fora e região — e o produto chega pronto para instalação.
+              </p>
+
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href="#orcamento"
+                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground shadow-glow transition hover:-translate-y-0.5"
+                >
+                  Pedir orçamento gratuito
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </a>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-background/25 bg-transparent px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-background transition hover:bg-background hover:text-foreground"
+                >
+                  <MessageCircle className="h-4 w-4" /> WhatsApp
+                </a>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.18em] text-background/60">
+                <span className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-primary" /> Sem compromisso</span>
+                <span className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-primary" /> Resposta em 24h</span>
+                <span className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-primary" /> Parcelamento 6×</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

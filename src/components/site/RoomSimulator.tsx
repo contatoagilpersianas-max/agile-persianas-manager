@@ -17,6 +17,7 @@ import {
   Clock,
   Gift,
   ArrowLeftRight,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";

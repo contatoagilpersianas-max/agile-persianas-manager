@@ -96,7 +96,7 @@ export function CategoriesPremium() {
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
               Persianas, cortinas e toldos sob medida — escolha o modelo perfeito
-              para cada janela com tecidos premium e instalação profissional.
+              para cada janela, com tecidos premium e envio para todo o Brasil.
             </p>
           </div>
           <Link

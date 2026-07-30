@@ -74,8 +74,8 @@ function PersianaRoloBlackoutPage() {
           <p>
             Trabalhamos apenas com tecidos blackout certificados, perfis de alumínio
             anodizado e acionamento manual ou motorizado (RF, Wi-Fi, Alexa e Google Home).
-            Cada peça é fabricada na nossa unidade em Juiz de Fora — MG e enviada para
-            todo o Brasil.
+            Cada peça é fabricada sob medida na nossa unidade em Minas Gerais e enviada
+            para todo o Brasil.
           </p>
         </>
       }

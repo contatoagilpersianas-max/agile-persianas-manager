@@ -1068,7 +1068,7 @@ function RoomSimulatorInner() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-foreground/40 via-foreground/10 to-transparent lg:bg-gradient-to-l" />
               <div className="absolute bottom-5 left-5 rounded-full bg-background/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-foreground">
-                Medição gratuita
+                Conferimos sua medida
               </div>
             </div>
 
@@ -1082,8 +1082,10 @@ function RoomSimulatorInner() {
                 <br />
                 <span className="italic text-primary">Vamos medir juntos.</span>
               </h3>
+              {/* Não prometer medição em domicílio nem instalação: a Ágil
+                  fabrica e envia, o cliente instala. Também não citar cidade. */}
               <p className="max-w-md text-[15px] leading-relaxed text-background/75">
-                Nossa equipe faz a medição gratuita na sua casa em Juiz de Fora e região — e o produto chega pronto para instalação.
+                A gente te ajuda a medir pelo WhatsApp — manda uma foto da janela com a fita esticada e nós conferimos antes de produzir. Envio para todo o Brasil.
               </p>
 
               <div className="mt-2 flex flex-wrap items-center gap-3">

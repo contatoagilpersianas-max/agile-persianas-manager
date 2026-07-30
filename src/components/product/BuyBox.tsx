@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Star, Truck, Ruler, MessageCircle, ChevronRight, Wrench, Sparkles, ShieldCheck } from "lucide-react";
+import { Star, Truck, Ruler, MessageCircle, ChevronRight, Wrench, Sparkles, ShieldCheck, MoveHorizontal, Layers, Clock, PanelTop } from "lucide-react";
 import type { Product } from "@/routes/produto.$slug";
 import { toast } from "sonner";
 import { ShippingCalculator } from "./ShippingCalculator";
@@ -404,23 +404,27 @@ export function BuyBox({
 
           {/* Resumo técnico do pedido — folga do suporte sobre o tecido (+3cm) e
               profundidade do mecanismo, pra o cliente conferir contra a janela dele. */}
-          <div className="mt-3 rounded-xl border bg-sand/40 p-4">
-            <div className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
+          <div className="mt-3 rounded-2xl border bg-gradient-to-br from-sand/50 to-sand/20 p-5 shadow-sm">
+            <div className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
               Resumo técnico do pedido
             </div>
-            <dl className="grid grid-cols-2 gap-y-1.5 text-sm">
-              <dt className="text-muted-foreground">Largura do Suporte</dt>
-              <dd className="text-right font-medium">{((width + 3) / 100).toFixed(2)} m</dd>
-              <dt className="text-muted-foreground">Largura do Tecido</dt>
-              <dd className="text-right font-medium">{(width / 100).toFixed(2)} m</dd>
-              <dt className="text-muted-foreground">Profundidade</dt>
-              <dd className="text-right font-medium">0,10 m</dd>
-              <dt className="text-muted-foreground">Altura Total</dt>
-              <dd className="text-right font-medium">{(height / 100).toFixed(2)} m</dd>
-              <dt className="text-muted-foreground">Tempo de envio</dt>
-              <dd className="text-right font-medium">Fabricação em 7 a 12 dias úteis</dd>
-              <dt className="text-muted-foreground">Instalação</dt>
-              <dd className="text-right font-medium">{mount === "inside" ? "Dentro do vão" : "Fora do vão"}</dd>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-3">
+              {[
+                { Icon: MoveHorizontal, label: "Largura do Suporte", value: `${((width + 3) / 100).toFixed(2)} m` },
+                { Icon: Ruler, label: "Largura do Tecido", value: `${(width / 100).toFixed(2)} m` },
+                { Icon: Layers, label: "Profundidade", value: "0,10 m" },
+                { Icon: PanelTop, label: "Altura Total", value: `${(height / 100).toFixed(2)} m` },
+                { Icon: Clock, label: "Tempo de envio", value: "7 a 12 dias úteis" },
+                { Icon: Wrench, label: "Instalação", value: mount === "inside" ? "Dentro do vão" : "Fora do vão" },
+              ].map(({ Icon, label, value }) => (
+                <div key={label} className="flex items-start gap-2">
+                  <Icon className="mt-0.5 h-4 w-4 shrink-0 text-primary/70" />
+                  <div>
+                    <dt className="text-[11px] leading-tight text-muted-foreground">{label}</dt>
+                    <dd className="font-medium leading-tight">{value}</dd>
+                  </div>
+                </div>
+              ))}
             </dl>
           </div>
         </div>

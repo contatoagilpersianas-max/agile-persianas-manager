@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 
 export type GalleryImage = string | { url: string; caption?: string; color?: string };
 
@@ -24,9 +24,32 @@ export function ProductGallery({
 }) {
   const [active, setActive] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  const [magnify, setMagnify] = useState(false);
+  const [lensPos, setLensPos] = useState({ x: 50, y: 50 });
+  const stageRef = useRef<HTMLDivElement>(null);
   const list = normalize(images);
   const safe = list.length ? list : [{ url: "/placeholder.svg" }];
   const current = safe[active];
+
+  function handleStageMove(e: React.MouseEvent) {
+    const rect = stageRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setLensPos({ x: Math.min(100, Math.max(0, x)), y: Math.min(100, Math.max(0, y)) });
+  }
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!zoomed) return;
+      if (e.key === "Escape") setZoomed(false);
+      if (e.key === "ArrowRight") setActive((a) => (a + 1) % safe.length);
+      if (e.key === "ArrowLeft") setActive((a) => (a - 1 + safe.length) % safe.length);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoomed, safe.length]);
 
   useEffect(() => {
     if (!activeColor) return;
@@ -92,13 +115,30 @@ export function ProductGallery({
           >
             <ZoomIn className="h-4 w-4" />
           </button>
-          <div className="group aspect-[10/12] sm:aspect-[5/6] lg:aspect-[4/5] w-full overflow-hidden">
+          <div
+            ref={stageRef}
+            className="group relative aspect-[10/12] sm:aspect-[5/6] lg:aspect-[4/5] w-full overflow-hidden lg:cursor-zoom-in"
+            onMouseEnter={() => setMagnify(true)}
+            onMouseLeave={() => setMagnify(false)}
+            onMouseMove={handleStageMove}
+          >
             <img
+              key={current.url}
               src={current.url}
               alt={current.caption || alt}
-              className="h-full w-full object-cover object-center transition-transform duration-700 ease-premium group-hover:scale-[1.05]"
+              className="h-full w-full object-cover object-center animate-fade-up transition-transform duration-700 ease-premium group-hover:scale-[1.05]"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-90" />
+            {/* Lupa — amplia a imagem seguindo o cursor (só desktop, padrão de e-commerce premium) */}
+            <div
+              className="pointer-events-none absolute inset-0 hidden bg-no-repeat transition-opacity duration-200 lg:block"
+              style={{
+                opacity: magnify ? 1 : 0,
+                backgroundImage: `url(${current.url})`,
+                backgroundSize: "220%",
+                backgroundPosition: `${lensPos.x}% ${lensPos.y}%`,
+              }}
+            />
           </div>
           {current.caption && (
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-sm px-5 py-3">
@@ -160,9 +200,54 @@ export function ProductGallery({
       {zoomed && (
         <div
           onClick={() => setZoomed(false)}
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 cursor-zoom-out animate-fade-up"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm cursor-zoom-out animate-fade-up"
         >
-          <img src={current.url} alt={alt} className="max-h-[90vh] max-w-full rounded-lg" />
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setZoomed(false);
+            }}
+            className="absolute right-4 top-4 sm:right-6 sm:top-6 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20"
+            aria-label="Fechar"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          {safe.length > 1 && (
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 sm:top-6 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md">
+              {active + 1} / {safe.length}
+            </div>
+          )}
+          <img
+            src={current.url}
+            alt={current.caption || alt}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[90vh] max-w-full rounded-lg cursor-default shadow-2xl"
+          />
+          {safe.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActive((a) => (a - 1 + safe.length) % safe.length);
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 sm:left-6 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActive((a) => (a + 1) % safe.length);
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 sm:right-6 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                aria-label="Próxima"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>

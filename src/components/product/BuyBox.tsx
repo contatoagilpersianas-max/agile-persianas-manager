@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { getPrecoAoVivo } from "@/lib/facil-persianas-price.functions";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -61,6 +63,8 @@ export function BuyBox({
   const [bando, setBando] = useState(false);
   const [shipping, setShipping] = useState<ShippingQuote | null>(null);
   const navigate = useNavigate();
+  const buscarPrecoAoVivo = useServerFn(getPrecoAoVivo);
+  const [livePrice, setLivePrice] = useState<{ key: string; price: number } | null>(null);
 
   const productColors = useMemo(() => {
     if (Array.isArray(product.colors) && product.colors.length > 0) {
@@ -118,6 +122,29 @@ export function BuyBox({
     saveSelection(product.slug, { widthCm: width, heightCm: height });
   }, [width, height, product.slug]);
 
+  // Preço ao vivo: consulta o preço real da Fácil Persianas pra essa área/cor
+  // (mesma técnica do agente de WhatsApp) em vez de usar só o price_per_sqm
+  // fixo do banco, que não acompanha os "degraus" reais de preço por área.
+  useEffect(() => {
+    const area = Math.max((width * height) / 10000, product.min_area);
+    const key = `${width}-${height}-${color}`;
+    let cancelled = false;
+    const t = setTimeout(() => {
+      buscarPrecoAoVivo({ data: { productSlug: product.slug, color, areaM2: area } })
+        .then((res) => {
+          if (cancelled) return;
+          setLivePrice(res.success ? { key, price: res.price } : null);
+        })
+        .catch(() => {
+          if (!cancelled) setLivePrice(null);
+        });
+    }, 400);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [width, height, color, product.slug, product.min_area, buscarPrecoAoVivo]);
+
   const widthOptions = useMemo(
     () => buildMeasureOptions(product.min_width_cm, product.max_width_cm),
     [product.min_width_cm, product.max_width_cm],
@@ -151,15 +178,14 @@ export function BuyBox({
     return Number(c?.price_delta ?? 0) || 0;
   }, [productColors, color]);
 
+  const area = Math.max((width * height) / 10000, product.min_area);
+  const livePriceKey = `${width}-${height}-${color}`;
+  const usingLivePrice = livePrice?.key === livePriceKey;
+  const areaCost = usingLivePrice ? livePrice!.price : area * product.price_per_sqm;
+
   const subtotal = useMemo(() => {
-    const area = Math.max((width * height) / 10000, product.min_area);
-    return (
-      area * product.price_per_sqm +
-      motorPrice +
-      (bando ? product.bando_price : 0) +
-      colorDelta
-    );
-  }, [width, height, motor, bando, product, motorPrice, colorDelta]);
+    return areaCost + motorPrice + (bando ? product.bando_price : 0) + colorDelta;
+  }, [areaCost, motor, bando, product, motorPrice, colorDelta]);
 
   const shippingCost = shipping?.price ?? 0;
   const total = subtotal + shippingCost;
@@ -250,7 +276,15 @@ export function BuyBox({
           </span>
         </div>
         <div className="mt-3 text-xs text-muted-foreground">
-          Preço por m²: <strong className="text-foreground">{BRL(product.price_per_sqm)}</strong> · área mínima cobrada {product.min_area} m²
+          {usingLivePrice ? (
+            <span className="inline-flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-success" />
+              Preço consultado agora no mercado
+            </span>
+          ) : (
+            <>Preço por m²: <strong className="text-foreground">{BRL(product.price_per_sqm)}</strong></>
+          )}
+          {" "}· área mínima cobrada {product.min_area} m²
         </div>
       </div>
 

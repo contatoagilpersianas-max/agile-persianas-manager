@@ -28,21 +28,21 @@ export type BeforeAfterConfig = {
 
 export const BEFORE_AFTER_DEFAULTS: BeforeAfterConfig = {
   enabled: true,
-  eyebrow: "Transformações reais",
-  title: "Veja como uma persiana muda tudo",
-  subtitle: "Arraste para comparar. Mesmos ambientes — antes e depois das nossas persianas instaladas.",
+  eyebrow: "Direto do nosso mostruário",
+  title: "Compare os acabamentos de perto",
+  subtitle: "Arraste para comparar — fotos reais da nossa loja, sem edição de ambiente.",
   pairs: [
     {
       before: "",
       after: "",
-      title: "Sala de estar",
-      desc: "Antes: janela nua e luz forte. Depois: persiana rolô em linho premium, luz suave e elegante.",
+      title: "Rolô Blackout",
+      desc: "Fotos reais do nosso mostruário: acabamento Liso Branco e acabamento Texturizado, os dois com bloqueio total de luz.",
     },
     {
       before: "",
       after: "",
-      title: "Quarto principal",
-      desc: "Antes: claridade desconfortável ao acordar. Depois: persiana rolô blackout, escurecimento total e conforto térmico.",
+      title: "Double Vision",
+      desc: "Fotos reais da nossa loja: faixas em listras finas e faixas zebradas — arraste para comparar o efeito de cada trama.",
     },
   ],
 };

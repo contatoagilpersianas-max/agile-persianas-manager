@@ -1,27 +1,29 @@
-// Seção "Antes & Depois" — comparador interativo (slider)
+// Seção "Compare de perto" — comparador interativo (slider) com fotos reais
+// do mostruário da Ágil, comparando dois acabamentos reais lado a lado
+// (nunca "antes/depois de instalação", já que a Ágil não presta esse serviço).
 import { useEffect, useRef, useState, useCallback } from "react";
-import beforeImg from "@/assets/ba-sala-antes.jpg";
-import afterImg from "@/assets/ba-sala-depois.jpg";
-import beforeImg2 from "@/assets/ba-quarto-antes.jpg";
-import afterImg2 from "@/assets/ba-quarto-depois.jpg";
 import { Sparkles } from "lucide-react";
 import { useSiteSetting } from "@/hooks/use-site-setting";
 import { BEFORE_AFTER_DEFAULTS, type BeforeAfterConfig } from "@/components/admin/site/BeforeAfterModule";
 
-type Pair = { before: string; after: string; title: string; desc: string };
+type Pair = { before: string; after: string; title: string; desc: string; beforeLabel: string; afterLabel: string };
 
 const FALLBACK_PAIRS: Pair[] = [
   {
-    before: beforeImg,
-    after: afterImg,
-    title: "Sala de estar",
-    desc: "Antes: janela nua e sol direto na sala. Depois: a mesma sala com persiana rolô em linho premium, luz suave e ambiente acolhedor.",
+    before: "/showroom/rolo-blackout-branca-mostruario.jpg",
+    after: "/showroom/rolo-blackout-cinza-mostruario-2.jpg",
+    title: "Rolô Blackout",
+    desc: "Fotos reais do nosso mostruário: acabamento Liso Branco e acabamento Texturizado, os dois com bloqueio total de luz.",
+    beforeLabel: "Liso",
+    afterLabel: "Texturizado",
   },
   {
-    before: beforeImg2,
-    after: afterImg2,
-    title: "Quarto principal",
-    desc: "Antes: claridade desconfortável ao acordar. Depois: o mesmo quarto com persiana rolô blackout, escurecimento total e conforto térmico.",
+    before: "/showroom/double-vision-listrado-showroom.jpg",
+    after: "/showroom/double-vision-zebrado-showroom.jpg",
+    title: "Double Vision",
+    desc: "Fotos reais da nossa loja: faixas em listras finas e faixas zebradas — arraste para comparar o efeito de cada trama.",
+    beforeLabel: "Listrado",
+    afterLabel: "Zebrado",
   },
 ];
 
@@ -81,22 +83,22 @@ function CompareSlider({ pair }: { pair: Pair }) {
       }}
       onTouchStart={(e) => startDrag(e.touches[0].clientX)}
     >
-      {/* Depois (fundo) */}
+      {/* Segunda foto (fundo) */}
       <img
         src={pair.after}
-        alt={`${pair.title} — depois`}
+        alt={`${pair.title} — ${pair.afterLabel}`}
         loading="lazy"
         draggable={false}
         className="absolute inset-0 h-full w-full object-cover pointer-events-none"
       />
-      {/* Antes (clipado) */}
+      {/* Primeira foto (clipada) */}
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
         style={{ width: `${pos}%` }}
       >
         <img
           src={pair.before}
-          alt={`${pair.title} — antes`}
+          alt={`${pair.title} — ${pair.beforeLabel}`}
           loading="lazy"
           draggable={false}
           className="absolute inset-0 h-full w-full object-cover"
@@ -106,10 +108,10 @@ function CompareSlider({ pair }: { pair: Pair }) {
 
       {/* Labels — sempre visíveis, alto contraste */}
       <span className="absolute left-4 top-4 z-10 rounded-full bg-black/75 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white shadow-lg pointer-events-none">
-        Antes
+        {pair.beforeLabel}
       </span>
       <span className="absolute right-4 top-4 z-10 rounded-full bg-primary px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg pointer-events-none">
-        Depois
+        {pair.afterLabel}
       </span>
 
       {/* Linha + handle */}
@@ -132,9 +134,9 @@ function CompareSlider({ pair }: { pair: Pair }) {
           {pair.title}
         </div>
         <div className="mt-1 text-xs text-white/85 transition-opacity duration-300">
-          {pos > 50
-            ? "Antes: " + (pair.desc.split("Depois:")[0].replace("Antes:", "").trim().replace(/\.$/, "") || "ambiente sem tratamento")
-            : "Depois: " + (pair.desc.split("Depois:")[1]?.trim() || "ambiente transformado")}
+          {pos > 50 ? pair.beforeLabel : pair.afterLabel}
+          {" — "}
+          {pair.desc}
         </div>
       </figcaption>
     </figure>
@@ -145,12 +147,17 @@ export function BeforeAfter() {
   const { value: cfg } = useSiteSetting<BeforeAfterConfig>("before_after", BEFORE_AFTER_DEFAULTS);
   if (!cfg.enabled) return null;
   const rawPairs = cfg.pairs?.length ? cfg.pairs : FALLBACK_PAIRS;
-  const pairs: Pair[] = rawPairs.map((p, i) => ({
-    title: p.title || FALLBACK_PAIRS[i % FALLBACK_PAIRS.length].title,
-    desc: p.desc || FALLBACK_PAIRS[i % FALLBACK_PAIRS.length].desc,
-    before: p.before || FALLBACK_PAIRS[i % FALLBACK_PAIRS.length].before,
-    after: p.after || FALLBACK_PAIRS[i % FALLBACK_PAIRS.length].after,
-  }));
+  const pairs: Pair[] = rawPairs.map((p, i) => {
+    const fallback = FALLBACK_PAIRS[i % FALLBACK_PAIRS.length];
+    return {
+      title: p.title || fallback.title,
+      desc: p.desc || fallback.desc,
+      before: p.before || fallback.before,
+      after: p.after || fallback.after,
+      beforeLabel: fallback.beforeLabel,
+      afterLabel: fallback.afterLabel,
+    };
+  });
   return (
     <section className="bg-background py-12 md:py-16">
       <div className="container-premium">

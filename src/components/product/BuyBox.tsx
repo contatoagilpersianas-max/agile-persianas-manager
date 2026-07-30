@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { getPrecoAoVivo } from "@/lib/facil-persianas-price.functions";
+import { getPrecoAoVivo, AREA_MINIMA_COBRADA_M2 } from "@/lib/facil-persianas-price.functions";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -125,14 +125,14 @@ export function BuyBox({
   // Preço ao vivo: consulta o preço real da Fácil Persianas pra essa área/cor
   // (mesma técnica do agente de WhatsApp) em vez de usar só o price_per_sqm
   // fixo do banco, que não acompanha os "degraus" reais de preço por área.
-  // Usa a área real pedida (sem forçar o min_area do banco) — o próprio degrau
-  // de preço real já cobra o mínimo correto pra cada tamanho.
+  // Área mínima cobrada é uma política própria da Ágil (1,8 m²), não do
+  // banco — qualquer pedido menor é cobrado como se tivesse essa área.
   useEffect(() => {
-    const areaReal = (width * height) / 10000;
+    const areaCobrada = Math.max((width * height) / 10000, AREA_MINIMA_COBRADA_M2);
     const key = `${width}-${height}-${color}`;
     let cancelled = false;
     const t = setTimeout(() => {
-      buscarPrecoAoVivo({ data: { productSlug: product.slug, color, areaM2: areaReal } })
+      buscarPrecoAoVivo({ data: { productSlug: product.slug, color, areaM2: areaCobrada } })
         .then((res) => {
           if (cancelled) return;
           setLivePrice(res.success ? { key, price: res.price } : null);
@@ -180,7 +180,7 @@ export function BuyBox({
     return Number(c?.price_delta ?? 0) || 0;
   }, [productColors, color]);
 
-  const area = Math.max((width * height) / 10000, product.min_area);
+  const area = Math.max((width * height) / 10000, AREA_MINIMA_COBRADA_M2);
   const livePriceKey = `${width}-${height}-${color}`;
   const usingLivePrice = livePrice?.key === livePriceKey;
   const areaCost = usingLivePrice ? livePrice!.price : area * product.price_per_sqm;
@@ -401,6 +401,28 @@ export function BuyBox({
               💡 Para essa largura, recomendamos motorização para uso confortável.
             </div>
           )}
+
+          {/* Resumo técnico do pedido — folga do suporte sobre o tecido (+3cm) e
+              profundidade do mecanismo, pra o cliente conferir contra a janela dele. */}
+          <div className="mt-3 rounded-xl border bg-sand/40 p-4">
+            <div className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
+              Resumo técnico do pedido
+            </div>
+            <dl className="grid grid-cols-2 gap-y-1.5 text-sm">
+              <dt className="text-muted-foreground">Largura do Suporte</dt>
+              <dd className="text-right font-medium">{((width + 3) / 100).toFixed(2)} m</dd>
+              <dt className="text-muted-foreground">Largura do Tecido</dt>
+              <dd className="text-right font-medium">{(width / 100).toFixed(2)} m</dd>
+              <dt className="text-muted-foreground">Profundidade</dt>
+              <dd className="text-right font-medium">0,10 m</dd>
+              <dt className="text-muted-foreground">Altura Total</dt>
+              <dd className="text-right font-medium">{(height / 100).toFixed(2)} m</dd>
+              <dt className="text-muted-foreground">Tempo de envio</dt>
+              <dd className="text-right font-medium">Fabricação em 7 a 12 dias úteis</dd>
+              <dt className="text-muted-foreground">Instalação</dt>
+              <dd className="text-right font-medium">{mount === "inside" ? "Dentro do vão" : "Fora do vão"}</dd>
+            </dl>
+          </div>
         </div>
 
         <IconOptionGroup

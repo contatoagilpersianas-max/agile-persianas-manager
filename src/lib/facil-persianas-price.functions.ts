@@ -5,10 +5,11 @@ import { z } from "zod";
  * Preço ao vivo direto do site da Fácil Persianas — mesma técnica usada pelo
  * agente de vendas do WhatsApp (ver agente-ia-vendas/templates/whatsapp/agent_template.py,
  * função `buscar_preco_ao_vivo`). O mercado desse produto não segue uma reta
- * simples de R$/m² (a taxa por m² varia por faixa), então em vez de usar o
- * price_per_sqm fixo do banco, buscamos os preços reais das variantes
- * (largura x altura) publicadas pela Fácil Persianas e interpolamos entre os
- * pontos mais próximos da área pedida.
+ * simples de R$/m² (o preço sobe em degraus reais por tamanho), então em vez
+ * de usar o price_per_sqm fixo do banco, buscamos os preços reais das
+ * variantes (largura x altura) publicadas pela Fácil Persianas e usamos o
+ * preço do próximo degrau real >= área pedida (a Fácil arredonda pra cima,
+ * não interpola — testado ao vivo no seletor real deles em 2026-07-30).
  *
  * Se a busca falhar por qualquer motivo (site fora do ar, timeout, produto
  * sem handle mapeado), retorna success:false — quem chamar deve cair de
@@ -16,6 +17,15 @@ import { z } from "zod";
  */
 
 const FACIL_PERSIANAS_BASE = "https://www.facilpersianas.com.br";
+
+/**
+ * Área mínima cobrada pela Ágil (política própria, decidida pelo cliente em
+ * 2026-07-30) — qualquer pedido menor que isso é cobrado como se tivesse
+ * essa área. Usar esse valor em qualquer lugar do site que precise mostrar
+ * ou calcular a área mínima, em vez do campo `min_area` do banco (que ainda
+ * está com o valor antigo de 1 m² e não pode ser editado por aqui).
+ */
+export const AREA_MINIMA_COBRADA_M2 = 1.8;
 
 // Mesmo mapeamento cor → handle usado pelo agente do WhatsApp.
 const HANDLES_ROLO_BLACKOUT_LISO: Record<string, string> = {

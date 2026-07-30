@@ -1,5 +1,6 @@
 import { Truck, Wrench, Factory, Package, Clock, CreditCard } from "lucide-react";
 import type { Product } from "@/routes/produto.$slug";
+import { AREA_MINIMA_COBRADA_M2 } from "@/lib/facil-persianas-price.functions";
 
 const fmt = (cm: number) => `${(cm / 100).toFixed(2)} m`;
 
@@ -71,8 +72,8 @@ export function ProductSpecs({ product }: { product: Product }) {
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-muted-foreground">Área mínima</dt>
-                <dd className="font-medium">{product.min_area} m²</dd>
+                <dt className="text-muted-foreground">Área mínima cobrada</dt>
+                <dd className="font-medium">{AREA_MINIMA_COBRADA_M2.toLocaleString("pt-BR", { minimumFractionDigits: 1 })} m²</dd>
               </div>
               <div className="flex justify-between border-t pt-2 mt-2">
                 <dt className="text-muted-foreground">Preço por m²</dt>

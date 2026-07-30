@@ -26,6 +26,12 @@ import { simulateRoom } from "@/lib/simulate-room.functions";
 import { paletteFor, type FabricColor } from "@/lib/fabric-palettes";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteContact, whatsappLink } from "@/hooks/use-site-contact";
+import {
+  FabricSwatch,
+  fabricKindFromName,
+  fabricDescriptor,
+  shortFabricName,
+} from "@/components/site/FabricSwatch";
 
 type ColorOpt = { color: string; hex: string; img: string; swatch?: string };
 type Product = {
@@ -384,6 +390,8 @@ function RoomSimulatorInner() {
   );
   const color = product?.thumbs[Math.min(colorIdx, (product?.thumbs.length ?? 1) - 1)];
   const category = catalog.categories.find((c) => c.id === categoryId);
+  // Trama do tecido selecionado — usada para desenhar as amostras de cor.
+  const selectedKind = fabricKindFromName(product?.name ?? "", category?.label);
 
   // A simulação por IA é cara — só roda quando o cliente clica em "Simular".
   // Trocar de cor/produto após a primeira geração limpa o resultado para
@@ -839,16 +847,24 @@ function RoomSimulatorInner() {
             {/* Passo 2 — Tecido / Acabamento */}
             <div className="mt-6">
               <StepHeader n={2} title="Tecido / Acabamento" />
-              <div className="mt-3 grid grid-cols-3 gap-2.5">
+              {/* Mostruário: cada linha é uma amostra do tecido desenhada em CSS
+                  (ver FabricSwatch). Antes eram cards com foto de banco de
+                  imagem que não carregava — sobrava alt-text no lugar da foto. */}
+              <div className="mt-3 space-y-1.5">
                 {catalogLoading && productsInCategory.length === 0 &&
                   Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="aspect-[4/5] animate-pulse rounded-xl bg-muted" />
+                    <div key={i} className="h-[62px] animate-pulse rounded-xl bg-muted" />
                   ))}
                 {!catalogLoading && productsInCategory.length === 0 && (
-                  <p className="col-span-3 text-xs text-muted-foreground">Nenhum produto cadastrado nesta categoria.</p>
+                  <p className="text-xs text-muted-foreground">Nenhum produto cadastrado nesta categoria.</p>
                 )}
                 {productsInCategory.map((p) => {
                   const active = productId === p.id;
+                  const kind = fabricKindFromName(p.name, category?.label);
+                  const swatchHex =
+                    (active
+                      ? p.thumbs[Math.min(colorIdx, p.thumbs.length - 1)]?.hex
+                      : p.thumbs[0]?.hex) ?? "#D8D3CB";
                   return (
                     <button
                       key={p.id}
@@ -857,32 +873,50 @@ function RoomSimulatorInner() {
                         setProductId(p.id);
                         setColorIdx(0);
                       }}
-                      className={`group relative overflow-hidden rounded-xl border-2 bg-background text-left transition ${
-                        active ? "border-primary shadow-glow" : "border-transparent hover:border-primary/40"
+                      aria-pressed={active}
+                      className={`group relative flex w-full items-center gap-3.5 overflow-hidden rounded-xl border px-3 py-2.5 text-left transition-all duration-300 ${
+                        active
+                          ? "border-primary/40 bg-primary/[0.055] shadow-[0_1px_0_rgba(0,0,0,.02),0_8px_24px_-16px_rgba(0,0,0,.35)]"
+                          : "border-border/70 bg-background/60 hover:border-primary/30 hover:bg-background"
                       }`}
                     >
-                      <div className="relative aspect-[4/5] overflow-hidden">
-                        <img
-                          src={p.cover}
-                          alt={p.name}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                        />
-                        {active && (
-                          <div className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
-                            <Check className="h-3.5 w-3.5" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="px-2 py-2">
-                        <div className="line-clamp-2 text-[11px] font-semibold leading-tight">{p.name}</div>
-                      </div>
+                      {/* filete de acento no selecionado */}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute inset-y-0 left-0 w-[3px] bg-primary transition-transform duration-300 ${
+                          active ? "scale-y-100" : "scale-y-0"
+                        }`}
+                      />
+                      <FabricSwatch
+                        hex={swatchHex}
+                        kind={kind}
+                        withHeadrail
+                        className={`h-[46px] w-[34px] shrink-0 rounded-[4px] shadow-sm transition-transform duration-300 ${
+                          active ? "scale-[1.06]" : "group-hover:scale-[1.03]"
+                        }`}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[13px] font-semibold leading-snug tracking-[-0.01em]">
+                          {shortFabricName(p.name, category?.label)}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[11px] leading-snug text-muted-foreground">
+                          {fabricDescriptor(kind)}
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${
+                          active
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border/80 bg-transparent text-transparent group-hover:border-primary/40"
+                        }`}
+                      >
+                        <Check className="h-3 w-3" strokeWidth={3} />
+                      </span>
                     </button>
                   );
                 })}
               </div>
-              {product?.description && (
-                <p className="mt-2 text-[11px] text-muted-foreground line-clamp-2">{product.description}</p>
-              )}
             </div>
 
             {/* Passo 3 — Cor */}
@@ -896,46 +930,53 @@ function RoomSimulatorInner() {
                   </span>
                 )}
               </div>
-              <div className="mt-3 grid grid-cols-5 gap-2 sm:gap-2.5">
+              {/* Amostras de cor com a trama do tecido selecionado, não bolinhas
+                  chapadas: a mesma cor lê muito diferente em screen e em blackout. */}
+              <div className="mt-3 grid grid-cols-5 gap-1.5 sm:gap-2">
                 {product?.thumbs.map((t, i) => {
                   const active = colorIdx === i;
                   return (
                     <button
-                      key={t.color}
+                      key={`${t.color}-${i}`}
                       type="button"
                       onClick={() => setColorIdx(i)}
                       title={t.color}
-                      className={`group relative flex flex-col items-center gap-1.5 rounded-xl p-1.5 transition ${
-                        active ? "bg-primary/10 ring-2 ring-primary" : "hover:bg-muted/70"
-                      }`}
+                      aria-pressed={active}
+                      className="group flex flex-col items-center gap-1.5 rounded-lg p-1 transition"
                     >
                       <span
-                        className="relative block h-12 w-12 overflow-hidden rounded-full border border-black/10 shadow-md ring-1 ring-white/40 sm:h-14 sm:w-14"
-                        style={{ backgroundColor: t.hex }}
+                        className={`relative block w-full overflow-hidden rounded-[4px] transition-all duration-300 ${
+                          active
+                            ? "ring-2 ring-primary ring-offset-2 ring-offset-card"
+                            : "ring-1 ring-black/10 group-hover:ring-primary/40"
+                        }`}
                       >
-                        {t.swatch && (
-                          <img
-                            src={t.swatch}
-                            alt=""
-                            aria-hidden
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
-                        )}
+                        <FabricSwatch
+                          hex={t.hex}
+                          kind={selectedKind}
+                          className={`block h-[52px] w-full transition-transform duration-500 ${
+                            active ? "scale-[1.04]" : "group-hover:scale-[1.02]"
+                          }`}
+                        />
                         {active && (
-                          <span className="absolute inset-0 flex items-center justify-center bg-black/30">
-                            <Check className="h-5 w-5 text-white drop-shadow" />
+                          <span className="pointer-events-none absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
+                            <Check className="h-2.5 w-2.5" strokeWidth={3.5} />
                           </span>
                         )}
                       </span>
-                      <span className="line-clamp-1 text-[10px] font-semibold leading-tight text-foreground/80">
+                      <span
+                        className={`line-clamp-1 text-[10px] leading-tight transition-colors ${
+                          active ? "font-bold text-foreground" : "font-medium text-muted-foreground"
+                        }`}
+                      >
                         {t.color}
                       </span>
                     </button>
                   );
                 })}
               </div>
-              <p className="mt-2 text-[11px] text-muted-foreground">
-                Toque em uma cor — a persiana é repintada na sua janela em segundos.
+              <p className="mt-2.5 text-[11px] leading-relaxed text-muted-foreground">
+                As amostras são uma representação da trama do tecido. Toque em uma cor — a persiana é repintada na sua janela em segundos.
               </p>
             </div>
 

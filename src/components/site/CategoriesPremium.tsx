@@ -2,17 +2,19 @@
 // com imagens reais, hover com zoom suave e link direto para o catálogo filtrado.
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import imgRomana from "@/assets/cat-romana.jpg";
 import imgPainel from "@/assets/cat-painel.jpg";
 import imgAutomacao from "@/assets/section-automacao.jpg";
 import imgTela from "@/assets/cat-tela.jpg";
 import imgToldo from "@/assets/cat-toldo.jpg";
 
-// Fotos reais do mostruário/loja física da Ágil (substituindo renders de IA)
+// Fotos reais de projetos e do mostruário (substituindo renders de IA).
+// Painel, Automação, Tela e Toldo ainda usam render — trocar quando houver
+// foto real desses modelos.
 const imgRolo = "/showroom/rolo-blackout-branca-mostruario.jpg";
 const imgDouble = "/showroom/double-vision-zebrado-showroom.jpg";
 const imgHorizontal = "/showroom/persiana-horizontal-aluminio-showroom.jpg";
 const imgVertical = "/showroom/persiana-vertical-bege-showroom.jpg";
+const imgRomana = "/showroom/cortina-romana-invicta.jpg";
 
 type Item = {
   title: string;

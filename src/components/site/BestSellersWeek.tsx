@@ -181,11 +181,13 @@ function ProductCard({ product, rank }: { product: Product; rank: number }) {
           {product.name}
         </h3>
 
-        <div className="mt-1.5 flex items-center gap-1 text-[11px] text-muted-foreground">
-          <Star className="h-3 w-3 fill-primary text-primary" />
-          <span className="font-medium text-foreground/80">{product.rating.toFixed(1)}</span>
-          <span>({product.reviews_count})</span>
-        </div>
+        {product.reviews_count > 0 && (
+          <div className="mt-1.5 flex items-center gap-1 text-[11px] text-muted-foreground">
+            <Star className="h-3 w-3 fill-primary text-primary" />
+            <span className="font-medium text-foreground/80">{product.rating.toFixed(1)}</span>
+            <span>({product.reviews_count})</span>
+          </div>
+        )}
 
         <div className="mt-2.5 flex flex-col">
           {fullPrice && (

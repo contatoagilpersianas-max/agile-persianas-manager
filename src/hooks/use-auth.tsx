@@ -2,6 +2,9 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 
+// Remove esta linha quando configurar autenticação real no Supabase
+const DEV_BYPASS = true;
+
 interface AuthContextValue {
   user: User | null;
   session: Session | null;
@@ -14,13 +17,24 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+const DEV_USER = {
+  id: "dev-bypass",
+  email: "admin@agilpersianas.com.br",
+  app_metadata: {},
+  user_metadata: {},
+  aud: "authenticated",
+  created_at: new Date().toISOString(),
+} as unknown as User;
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(DEV_BYPASS ? DEV_USER : null);
   const [session, setSession] = useState<Session | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(DEV_BYPASS);
+  const [loading, setLoading] = useState(!DEV_BYPASS);
 
   useEffect(() => {
+    if (DEV_BYPASS) return;
+
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
@@ -52,6 +66,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signIn(email: string, password: string) {
+    if (DEV_BYPASS) {
+      setUser({ ...DEV_USER, email } as User);
+      setIsAdmin(true);
+      return { error: null };
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error: error?.message ?? null };
   }
@@ -67,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut() {
+    if (DEV_BYPASS) return;
     await supabase.auth.signOut();
   }
 

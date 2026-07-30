@@ -71,11 +71,13 @@ export function DiscountsGrid() {
                 <h3 className="line-clamp-2 text-[13px] font-medium tracking-wide text-foreground transition group-hover:text-primary">
                   {p.name}
                 </h3>
-                <div className="mt-1.5 flex items-center justify-center gap-1 text-[11px] text-muted-foreground">
-                  <Star className="h-3 w-3 fill-primary text-primary" />
-                  <span className="font-medium text-foreground/80">{p.rating.toFixed(1)}</span>
-                  <span>({p.reviews_count})</span>
-                </div>
+                {p.reviews_count > 0 && (
+                  <div className="mt-1.5 flex items-center justify-center gap-1 text-[11px] text-muted-foreground">
+                    <Star className="h-3 w-3 fill-primary text-primary" />
+                    <span className="font-medium text-foreground/80">{p.rating.toFixed(1)}</span>
+                    <span>({p.reviews_count})</span>
+                  </div>
+                )}
                 <div className="mt-2.5 font-display text-lg font-semibold">
                   {fmt(p.price_per_sqm)}
                 </div>

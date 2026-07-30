@@ -336,7 +336,10 @@ function Dashboard() {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {cards.map((card) => (
-          <Card key={card.label} className="p-5 hover:shadow-lg transition">
+          <Card
+            key={card.label}
+            className="p-5 hover:shadow-elevated hover:-translate-y-0.5 hover:border-primary/25"
+          >
             <div className="flex items-start justify-between">
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <card.icon className="h-5 w-5 text-primary" />

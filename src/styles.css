@@ -153,6 +153,9 @@
   .bg-gradient-primary { background-image: var(--gradient-primary); }
   .bg-gradient-warm { background-image: var(--gradient-warm); }
   .bg-gradient-dark { background-image: var(--gradient-dark); }
+  .shadow-subtle { box-shadow: var(--shadow-sm); }
+  .shadow-elevated { box-shadow: var(--shadow-md); }
+  .shadow-floating { box-shadow: var(--shadow-lg); }
   .shadow-card { box-shadow: var(--shadow-card); }
   .shadow-glow { box-shadow: var(--shadow-glow); }
   .ease-premium { transition-timing-function: var(--ease-premium); }

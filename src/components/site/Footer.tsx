@@ -39,6 +39,8 @@ const DEFAULT_COLS: FooterColumn[] = [
       { label: "Escolha de tecidos", url: "/blog/como-escolher-tecido-persiana" },
       { label: "Automação", url: "/blog/automacao-persianas-casa-inteligente" },
       { label: "FAQ", url: "#faq" },
+      { label: "Política de entrega", url: "/politica-de-entrega" },
+      { label: "Trocas e devoluções", url: "/trocas-e-devolucoes" },
     ],
   },
   {
@@ -46,7 +48,8 @@ const DEFAULT_COLS: FooterColumn[] = [
     enabled: true,
     links: [
       { label: "Blog Ágil", url: "/blog" },
-      { label: "Política de privacidade", url: "#privacidade" },
+      { label: "Política de privacidade", url: "/politica-de-privacidade" },
+      { label: "Termos e condições", url: "/termos-de-uso" },
     ],
   },
 ];
@@ -196,9 +199,9 @@ export function Footer() {
             {cfg.copyright}
           </div>
           <div className="flex gap-5">
-            <a href="#" className="hover:text-white">Privacidade</a>
-            <a href="#" className="hover:text-white">Termos</a>
-            <a href="#" className="hover:text-white">Cookies</a>
+            <Link to="/politica-de-privacidade" className="hover:text-white">Privacidade</Link>
+            <Link to="/termos-de-uso" className="hover:text-white">Termos</Link>
+            <Link to="/trocas-e-devolucoes" className="hover:text-white">Trocas</Link>
           </div>
         </div>
       </div>

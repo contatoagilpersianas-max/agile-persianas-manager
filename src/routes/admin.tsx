@@ -100,8 +100,8 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-[oklch(0.98_0.003_240)] flex">
       <aside className="w-64 shrink-0 bg-graphite text-graphite-foreground flex flex-col sticky top-0 h-screen">
-        <div className="px-5 h-16 flex items-center gap-2 border-b border-white/10">
-          <div className="h-9 w-9 rounded-lg bg-gradient-primary flex items-center justify-center font-display font-bold text-lg">
+        <div className="px-5 h-16 flex items-center gap-2.5 border-b border-white/10">
+          <div className="h-9 w-9 rounded-lg bg-gradient-primary flex items-center justify-center font-display font-bold text-lg shadow-glow ring-1 ring-white/10">
             Á
           </div>
           <div>
@@ -117,14 +117,14 @@ function AdminLayout() {
               <Link
                 key={it.to}
                 to={it.to as "/admin"}
-                className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${
+                className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-300 ease-premium ${
                   active
-                    ? "bg-primary text-primary-foreground shadow-md"
-                    : "text-graphite-foreground/75 hover:bg-white/5 hover:text-graphite-foreground"
+                    ? "bg-primary text-primary-foreground shadow-elevated"
+                    : "text-graphite-foreground/70 hover:bg-white/[0.06] hover:text-graphite-foreground hover:translate-x-0.5"
                 }`}
               >
                 <it.icon className="h-4 w-4 shrink-0" />
-                <span className="flex-1">{it.label}</span>
+                <span className="flex-1 font-medium">{it.label}</span>
                 {active && <ChevronRight className="h-3.5 w-3.5" />}
               </Link>
             );
@@ -133,7 +133,7 @@ function AdminLayout() {
 
         <div className="p-3 border-t border-white/10">
           <div className="flex items-center gap-2 mb-2 px-2">
-            <div className="h-8 w-8 rounded-full bg-primary/30 flex items-center justify-center text-xs font-bold uppercase">
+            <div className="h-8 w-8 rounded-full bg-primary/25 ring-1 ring-primary/40 flex items-center justify-center text-xs font-bold uppercase">
               {user.email?.[0]}
             </div>
             <div className="flex-1 min-w-0">
@@ -148,21 +148,21 @@ function AdminLayout() {
       </aside>
 
       <div className="flex-1 min-w-0">
-        <header className="h-16 border-b bg-card sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+        <header className="h-16 border-b border-border/70 bg-card/95 sticky top-0 z-30 backdrop-blur-lg supports-[backdrop-filter]:bg-card/80">
           <div className="h-full px-6 flex items-center gap-4">
             <div className="relative flex-1 max-w-xl">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="search"
                 placeholder="Buscar produto, pedido, lead..."
-                className="h-10 w-full rounded-full bg-muted/60 pl-10 pr-4 text-sm outline-none focus:bg-background focus:ring-2 focus:ring-primary/20"
+                className="h-10 w-full rounded-full border border-transparent bg-muted/60 pl-10 pr-4 text-sm outline-none transition-all duration-300 ease-premium placeholder:text-muted-foreground/70 focus:border-primary/30 focus:bg-background focus:shadow-subtle focus:ring-2 focus:ring-primary/15"
               />
             </div>
-            <button className="relative h-10 w-10 rounded-full hover:bg-muted flex items-center justify-center">
+            <button className="relative h-10 w-10 rounded-full transition-colors duration-300 hover:bg-muted flex items-center justify-center">
               <Bell className="h-4 w-4" />
-              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary" />
+              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary shadow-glow" />
             </button>
-            <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">
+            <Link to="/" className="text-sm text-muted-foreground transition-colors hover:text-primary">
               Ver loja →
             </Link>
           </div>

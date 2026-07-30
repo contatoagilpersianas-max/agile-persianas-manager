@@ -344,7 +344,7 @@ function CheckoutPage() {
   if (pixResult) {
     return (
       <div className="min-h-screen py-12 px-4" style={{ backgroundColor: "#FFF6F1" }}>
-        <div className="max-w-2xl mx-auto bg-card rounded-2xl border shadow-sm p-8 text-center">
+        <div className="max-w-2xl mx-auto bg-card rounded-2xl border border-border/70 shadow-card p-8 text-center">
           <div className="mx-auto h-14 w-14 rounded-full bg-success/10 flex items-center justify-center mb-4">
             <CheckCircle2 className="h-7 w-7 text-success" />
           </div>
@@ -387,7 +387,7 @@ function CheckoutPage() {
   ].filter(Boolean) as string[];
 
   const Summary = (
-    <aside className="bg-card rounded-2xl border shadow-sm p-6 space-y-5">
+    <aside className="bg-card rounded-2xl border border-border/70 shadow-card p-6 space-y-5">
       <div className="flex gap-3">
         {payload.productImage && (
           <img
@@ -470,7 +470,7 @@ function CheckoutPage() {
           <button
             type="button"
             onClick={() => setSummaryOpen((v) => !v)}
-            className="w-full bg-card border rounded-xl p-4 flex items-center justify-between"
+            className="w-full bg-card border border-border/70 shadow-subtle rounded-xl p-4 flex items-center justify-between transition-all duration-300 ease-premium"
           >
             <span className="text-sm font-medium">Resumo do pedido</span>
             <span className="flex items-center gap-2 text-sm">
@@ -564,8 +564,8 @@ function CheckoutPage() {
                         type="button"
                         key={s.serviceCode}
                         onClick={() => setShipping(s)}
-                        className={`w-full text-left rounded-xl border-2 p-4 flex items-center justify-between transition-all ${
-                          active ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30"
+                        className={`w-full text-left rounded-xl border-2 p-4 flex items-center justify-between transition-all duration-300 ease-premium ${
+                          active ? "border-primary bg-primary/5 shadow-subtle" : "border-border hover:border-foreground/30"
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -597,8 +597,8 @@ function CheckoutPage() {
                       key={o.v}
                       type="button"
                       onClick={() => setBillingType(o.v)}
-                      className={`rounded-xl border-2 p-3 text-left transition-all ${
-                        active ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30"
+                      className={`rounded-xl border-2 p-3 text-left transition-all duration-300 ease-premium ${
+                        active ? "border-primary bg-primary/5 shadow-subtle" : "border-border hover:border-foreground/30"
                       }`}
                     >
                       <o.Icon className={`h-5 w-5 ${active ? "text-primary" : "text-muted-foreground"}`} />
@@ -627,7 +627,7 @@ function CheckoutPage() {
                     <select
                       value={installments}
                       onChange={(e) => setInstallments(Number(e.target.value))}
-                      className="flex h-11 w-full rounded-md border border-input bg-transparent px-3 text-sm"
+                      className="flex h-11 w-full rounded-lg border border-input bg-background px-3 text-sm shadow-subtle transition-all duration-300 ease-premium focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
                     >
                       {Array.from({ length: 6 }, (_, i) => i + 1).map((n) => (
                         <option key={n} value={n}>
@@ -680,7 +680,7 @@ function CheckoutPage() {
 
 function Section({ title, subtitle, children }: { title: string; subtitle?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <section className="bg-card rounded-2xl border shadow-sm p-6">
+    <section className="bg-card rounded-2xl border border-border/70 shadow-card p-6">
       <header className="flex items-center justify-between mb-4">
         <h2 className="font-display text-lg">{title}</h2>
         {subtitle}

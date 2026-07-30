@@ -109,8 +109,7 @@ export function HeroBanner() {
                   alt="Ambiente com cortinas e persianas sob medida"
                   loading={i === 0 ? "eager" : "lazy"}
                   decoding="async"
-                  // @ts-expect-error fetchpriority valid HTML
-                  fetchpriority={i === 0 ? "high" : "low"}
+                  fetchPriority={i === 0 ? "high" : "low"}
                   className={`absolute inset-0 h-full w-full object-cover object-[center_30%] sm:object-[center_40%] lg:object-center transition-all duration-[1400ms] ease-premium ${
                     i === active ? "opacity-100 scale-100" : "opacity-0 scale-[1.04]"
                   }`}

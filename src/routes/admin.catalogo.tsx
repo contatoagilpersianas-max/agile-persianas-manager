@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Plus, Edit, Trash2, Search, Package, ExternalLink, Loader2, AlertTriangle, Copy } from "lucide-react";
+import { Plus, Edit, Trash2, Search, Package, ExternalLink, Loader2, AlertTriangle, Copy, ImageOff, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { FileUpload } from "@/components/admin/FileUpload";
@@ -69,6 +69,7 @@ type Product = {
   active: boolean;
   featured: boolean;
   bestseller: boolean;
+  badge: string | null;
   position: number;
 };
 
@@ -128,6 +129,7 @@ function Catalog() {
   const [cats, setCats] = useState<Category[]>([]);
   const [search, setSearch] = useState("");
   const [filterCat, setFilterCat] = useState<string>("");
+  const [filterStatus, setFilterStatus] = useState<"" | "sem_imagem" | "aguardando" | "inativo">("");
   const [editing, setEditing] = useState<Partial<Product> | null>(null);
   const [editingExtraCats, setEditingExtraCats] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
@@ -155,7 +157,13 @@ function Catalog() {
   const filtered = products.filter((p) => {
     const okSearch = p.name.toLowerCase().includes(search.toLowerCase()) || (p.sku ?? "").toLowerCase().includes(search.toLowerCase());
     const okCat = !filterCat || p.category_id === filterCat;
-    return okSearch && okCat;
+    const okStatus =
+      filterStatus === "" ? true
+      : filterStatus === "sem_imagem" ? !p.cover_image
+      : filterStatus === "aguardando" ? p.badge === "Aguardando fotos"
+      : filterStatus === "inativo" ? !p.active
+      : true;
+    return okSearch && okCat && okStatus;
   });
 
   const catLabel = (id: string | null) => {
@@ -265,7 +273,9 @@ function Catalog() {
   }
 
   const lowStock = products.filter((p) => p.product_type === "simples" && p.stock <= p.stock_min && p.active).length;
-  const canReorder = !search && !filterCat;
+  const noPhoto = products.filter((p) => !p.cover_image && p.active).length;
+  const awaitingPhoto = products.filter((p) => p.badge === "Aguardando fotos").length;
+  const canReorder = !search && !filterCat && !filterStatus;
 
   return (
     <div className="space-y-6 max-w-[1400px]">
@@ -289,6 +299,24 @@ function Catalog() {
         </Card>
       )}
 
+      {noPhoto > 0 && (
+        <Card
+          className="p-3 border-blue-300 bg-blue-50 text-blue-900 flex items-center justify-between gap-2 text-sm cursor-pointer hover:bg-blue-100 transition"
+          onClick={() => setFilterStatus(filterStatus === "sem_imagem" ? "" : "sem_imagem")}
+        >
+          <div className="flex items-center gap-2">
+            <ImageOff className="h-4 w-4 shrink-0" />
+            <span>
+              <strong>{noPhoto}</strong> produto(s) ativo(s) sem foto de capa.
+              {awaitingPhoto > 0 && <span className="ml-2 opacity-70">({awaitingPhoto} marcado(s) como "Aguardando fotos")</span>}
+            </span>
+          </div>
+          <span className="text-xs font-semibold underline underline-offset-2">
+            {filterStatus === "sem_imagem" ? "Limpar filtro" : "Ver produtos"}
+          </span>
+        </Card>
+      )}
+
       <Card className="p-4 flex flex-wrap gap-3 items-center">
         <div className="relative flex-1 min-w-[240px] max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -305,6 +333,16 @@ function Catalog() {
               {c.parent_id ? "↳ " : ""}{c.name}
             </option>
           ))}
+        </select>
+        <select
+          className="h-9 rounded-md border bg-background px-3 text-sm"
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
+        >
+          <option value="">Todos os status</option>
+          <option value="sem_imagem">📷 Sem foto de capa</option>
+          <option value="aguardando">⏳ Aguardando fotos</option>
+          <option value="inativo">🔴 Inativos</option>
         </select>
         <span className="text-xs text-muted-foreground ml-auto">{filtered.length} de {products.length}</span>
       </Card>
@@ -342,6 +380,18 @@ function Catalog() {
                       {p.featured && <Badge className="bg-primary/10 text-primary border-0">Destaque</Badge>}
                       {!p.active && <Badge variant="secondary">Inativo</Badge>}
                       {lowS && <Badge className="bg-amber-100 text-amber-900 border-0">Estoque baixo</Badge>}
+                      {!p.cover_image && p.active && (
+                        <Badge className="bg-blue-100 text-blue-800 border-0 gap-1">
+                          <ImageOff className="h-3 w-3" />
+                          Sem foto
+                        </Badge>
+                      )}
+                      {p.badge === "Aguardando fotos" && (
+                        <Badge className="bg-violet-100 text-violet-800 border-0 gap-1">
+                          <Camera className="h-3 w-3" />
+                          Aguardando fotos
+                        </Badge>
+                      )}
                     </div>
                     <div className="text-xs text-muted-foreground mt-0.5 flex items-center gap-3 flex-wrap">
                       <span>{catLabel(p.category_id)}</span>
@@ -544,13 +594,25 @@ function ProductEditor({ open, editing, setEditing, cats, extraCats, setExtraCat
 
           {/* ── FOTOS ── */}
           <TabsContent value="fotos" className="space-y-6 pt-5">
+            {!e.cover_image && (
+              <div className="rounded-lg border border-blue-300 bg-blue-50 p-3 flex items-start gap-2 text-sm text-blue-900">
+                <ImageOff className="h-4 w-4 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-semibold">Produto sem foto de capa</p>
+                  <p className="text-xs mt-0.5 text-blue-700">
+                    Faça upload abaixo ou marque como "Aguardando fotos" na aba <strong>Publicação</strong> para controlar depois.
+                    Produtos sem foto ficam ocultos na vitrine mesmo se ativos.
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="grid md:grid-cols-[260px_1fr] gap-6">
               <div className="space-y-3">
                 <ImageUpload
                   label="Foto de capa"
                   folder="covers"
                   value={e.cover_image ?? null}
-                  onChange={(url) => set({ cover_image: url ?? "" })}
+                  onChange={(url) => set({ cover_image: url ?? "", badge: url ? (e.badge === "Aguardando fotos" ? null : e.badge) : e.badge })}
                   recommendedSize="1200 × 1200 px"
                 />
               </div>
@@ -714,17 +776,48 @@ function ProductEditor({ open, editing, setEditing, cats, extraCats, setExtraCat
               <label className="flex items-center justify-between gap-3 text-sm">
                 <div>
                   <div className="font-medium">Destaque na home</div>
-                  <div className="text-[11px] text-muted-foreground">Aparece em "Mais vendidos / Destaques".</div>
+                  <div className="text-[11px] text-muted-foreground">Aparece em 'Mais vendidos / Destaques'.</div>
                 </div>
                 <Switch checked={!!e.featured} onCheckedChange={(v) => set({ featured: v })} />
               </label>
               <label className="flex items-center justify-between gap-3 text-sm">
                 <div>
                   <div className="font-medium">Marcar como mais vendido</div>
-                  <div className="text-[11px] text-muted-foreground">Exibe o produto no atalho “Mais vendidos”.</div>
+                  <div className="text-[11px] text-muted-foreground">Exibe o produto no atalho 'Mais vendidos'.</div>
                 </div>
                 <Switch checked={!!e.bestseller} onCheckedChange={(v) => set({ bestseller: v })} />
               </label>
+            </div>
+
+            {/* Controle de fotos */}
+            <div className="rounded-lg border border-blue-200 bg-blue-50/60 p-4 space-y-3 max-w-md">
+              <div className="flex items-center gap-2 text-sm font-semibold text-blue-900">
+                <Camera className="h-4 w-4" />
+                Controle de fotos
+              </div>
+              <label className="flex items-center justify-between gap-3 text-sm">
+                <div>
+                  <div className="font-medium text-blue-900">Aguardando fotos da fábrica</div>
+                  <div className="text-[11px] text-blue-700">
+                    Marca o produto na lista do admin para acompanhamento. Não afeta visibilidade na loja.
+                  </div>
+                </div>
+                <Switch
+                  checked={e.badge === "Aguardando fotos"}
+                  onCheckedChange={(v) => set({ badge: v ? "Aguardando fotos" : null })}
+                />
+              </label>
+              {!e.cover_image && (
+                <p className="text-[11px] text-blue-700 flex items-center gap-1">
+                  <ImageOff className="h-3 w-3" />
+                  Este produto ainda não tem foto de capa. Adicione na aba <strong>Fotos</strong>.
+                </p>
+              )}
+              {e.cover_image && e.badge === "Aguardando fotos" && (
+                <p className="text-[11px] text-green-700 flex items-center gap-1">
+                  ✓ Foto de capa adicionada. Lembre-se de desmarcar "Aguardando fotos" acima.
+                </p>
+              )}
             </div>
           </TabsContent>
         </Tabs>
@@ -784,7 +877,7 @@ function ColorsEditor({
           <h4 className="font-semibold text-sm">Cores disponíveis</h4>
           <p className="text-[11px] text-muted-foreground">
             Cada cor selecionável deve ter ao menos uma foto na <strong>Galeria</strong> com o
-            campo <em>“Cor associada”</em> preenchido.
+            campo <em>"Cor associada"</em> preenchido.
           </p>
         </div>
         <Button type="button" size="sm" variant="outline" onClick={add}>

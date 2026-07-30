@@ -125,12 +125,14 @@ export function BuyBox({
   // Preço ao vivo: consulta o preço real da Fácil Persianas pra essa área/cor
   // (mesma técnica do agente de WhatsApp) em vez de usar só o price_per_sqm
   // fixo do banco, que não acompanha os "degraus" reais de preço por área.
+  // Usa a área real pedida (sem forçar o min_area do banco) — o próprio degrau
+  // de preço real já cobra o mínimo correto pra cada tamanho.
   useEffect(() => {
-    const area = Math.max((width * height) / 10000, product.min_area);
+    const areaReal = (width * height) / 10000;
     const key = `${width}-${height}-${color}`;
     let cancelled = false;
     const t = setTimeout(() => {
-      buscarPrecoAoVivo({ data: { productSlug: product.slug, color, areaM2: area } })
+      buscarPrecoAoVivo({ data: { productSlug: product.slug, color, areaM2: areaReal } })
         .then((res) => {
           if (cancelled) return;
           setLivePrice(res.success ? { key, price: res.price } : null);
@@ -143,7 +145,7 @@ export function BuyBox({
       cancelled = true;
       clearTimeout(t);
     };
-  }, [width, height, color, product.slug, product.min_area, buscarPrecoAoVivo]);
+  }, [width, height, color, product.slug, buscarPrecoAoVivo]);
 
   const widthOptions = useMemo(
     () => buildMeasureOptions(product.min_width_cm, product.max_width_cm),
@@ -275,17 +277,11 @@ export function BuyBox({
             PIX {BRL(pix)} <span className="text-xs text-muted-foreground">(-5%)</span>
           </span>
         </div>
-        <div className="mt-3 text-xs text-muted-foreground">
-          {usingLivePrice ? (
-            <span className="inline-flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-success" />
-              Preço consultado agora no mercado
-            </span>
-          ) : (
-            <>Preço por m²: <strong className="text-foreground">{BRL(product.price_per_sqm)}</strong></>
-          )}
-          {" "}· área mínima cobrada {product.min_area} m²
-        </div>
+        {!usingLivePrice && (
+          <div className="mt-3 text-xs text-muted-foreground">
+            Preço por m²: <strong className="text-foreground">{BRL(product.price_per_sqm)}</strong>
+          </div>
+        )}
       </div>
 
       {/* COLOR — moved up right under the price (premium) */}

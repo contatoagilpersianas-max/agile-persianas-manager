@@ -44,24 +44,26 @@ function handlesForSlug(slug: string): Record<string, string> | null {
   return null;
 }
 
-function interpolarPreco(areaM2: number, pontos: Array<[number, number]>): number {
+/**
+ * A Fácil Persianas NÃO interpola suavemente entre tamanhos — testamos ao
+ * vivo no site deles (mudando largura/altura no seletor real) e confirmamos
+ * que o preço "arredonda pra cima" pro próximo tamanho real de verdade
+ * (ex: 1,00m x 1,00m cobra o mesmo preço de 1,00m x 1,20m, porque não existe
+ * corte menor que 1,20m de altura pra essa largura). Por isso usamos o preço
+ * do próximo ponto real ≥ área pedida (degrau), em vez de calcular uma média
+ * entre dois pontos — a média dava um valor mais barato que o real.
+ */
+function precoPorDegrau(areaM2: number, pontos: Array<[number, number]>): number {
   const ordenados = [...pontos].sort((a, b) => a[0] - b[0]);
-  if (areaM2 <= ordenados[0][0]) return ordenados[0][1];
-  const ultimo = ordenados[ordenados.length - 1];
-  let a0: number, p0: number, a1: number, p1: number;
-  if (areaM2 >= ultimo[0]) {
-    [a0, p0] = ordenados[ordenados.length - 2];
-    [a1, p1] = ultimo;
-  } else {
-    let i = 0;
-    for (; i < ordenados.length - 1; i++) {
-      if (ordenados[i][0] <= areaM2 && areaM2 <= ordenados[i + 1][0]) break;
-    }
-    [a0, p0] = ordenados[i];
-    [a1, p1] = ordenados[i + 1];
+  for (const [area, preco] of ordenados) {
+    if (areaM2 <= area) return preco;
   }
+  // Área maior que o maior ponto coletado: aí sim extrapola pela inclinação
+  // do último trecho, já que não há um próximo degrau real pra usar.
+  const [a0, p0] = ordenados[ordenados.length - 2];
+  const [a1, p1] = ordenados[ordenados.length - 1];
   const taxa = (p1 - p0) / (a1 - a0);
-  return p0 + (areaM2 - a0) * taxa;
+  return p1 + (areaM2 - a1) * taxa;
 }
 
 async function buscarPrecoAoVivo(handle: string, areaM2: number): Promise<number | null> {
@@ -94,7 +96,7 @@ async function buscarPrecoAoVivo(handle: string, areaM2: number): Promise<number
       if (Number.isFinite(area) && Number.isFinite(price)) pontos.push([area, price]);
     }
     if (pontos.length === 0) return null;
-    return interpolarPreco(areaM2, pontos);
+    return precoPorDegrau(areaM2, pontos);
   } catch (err) {
     console.error(`Preço ao vivo (Fácil Persianas) falhou para ${handle}:`, err);
     return null;

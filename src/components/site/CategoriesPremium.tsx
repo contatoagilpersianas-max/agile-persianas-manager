@@ -2,15 +2,17 @@
 // com imagens reais, hover com zoom suave e link direto para o catálogo filtrado.
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import imgRolo from "@/assets/cat-rolo.jpg";
-import imgDouble from "@/assets/cat-double-vision.jpg";
 import imgRomana from "@/assets/cat-romana.jpg";
 import imgPainel from "@/assets/cat-painel.jpg";
-import imgHorizontal from "@/assets/cat-horizontal.jpg";
-import imgVertical from "@/assets/cat-vertical.jpg";
 import imgAutomacao from "@/assets/section-automacao.jpg";
 import imgTela from "@/assets/cat-tela.jpg";
 import imgToldo from "@/assets/cat-toldo.jpg";
+
+// Fotos reais do mostruário/loja física da Ágil (substituindo renders de IA)
+const imgRolo = "/showroom/rolo-blackout-branca-mostruario.jpg";
+const imgDouble = "/showroom/double-vision-zebrado-showroom.jpg";
+const imgHorizontal = "/showroom/persiana-horizontal-aluminio-showroom.jpg";
+const imgVertical = "/showroom/persiana-vertical-bege-showroom.jpg";
 
 type Item = {
   title: string;

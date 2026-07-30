@@ -21,7 +21,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Vocês fazem instalação?",
-    a: "Sim! Oferecemos serviço de instalação profissional. Entre em contato pelo WhatsApp para solicitar orçamento de instalação na sua cidade.",
+    a: "Não. Nós fabricamos e enviamos a peça sob medida completa, pronta para você instalar — acompanha suportes, parafusos, buchas e manual com o passo a passo. A instalação é simples (furadeira e chave de fenda) e leva cerca de 30 minutos. É justamente por não embutir instalação que conseguimos manter o preço de fábrica. Se preferir, qualquer profissional de pequenos reparos faz rapidamente. Qualquer dúvida durante a instalação, fale com a gente pelo WhatsApp.",
   },
   {
     q: "Como é feita a limpeza das persianas?",
@@ -70,7 +70,7 @@ export const Route = createFileRoute("/faq")({
       {
         name: "description",
         content:
-          "Tire suas dúvidas sobre nossas persianas e cortinas sob medida: medição, prazos, instalação, pagamento e garantia.",
+          "Tire suas dúvidas sobre nossas persianas e cortinas sob medida: como medir, prazos, envio, pagamento e garantia.",
       },
       { property: "og:title", content: "Perguntas Frequentes — Ágil Persianas" },
       {

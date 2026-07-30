@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/lib/cart";
 import { CartDrawer } from "@/components/site/CartDrawer";
-import { SocialProofToasts } from "@/components/site/SocialProofToasts";
 import { SeoHead } from "@/components/site/SeoHead";
 import { LumiWidget } from "@/components/site/LumiWidget";
 import { WhatsAppFAB } from "@/components/site/WhatsAppFAB";
@@ -119,7 +118,6 @@ function RootComponent() {
           <Outlet />
           <CartDrawer />
           <Toaster richColors position="top-right" />
-          <SocialProofToasts />
           {isSite && (
             <>
               <LumiWidget />

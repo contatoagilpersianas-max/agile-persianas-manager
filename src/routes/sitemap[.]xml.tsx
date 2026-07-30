@@ -7,7 +7,20 @@ const SITE = "https://agil2.lovable.app";
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "daily" },
   { path: "/catalogo", priority: "0.9", changefreq: "daily" },
+  { path: "/persiana-rolo-blackout", priority: "0.9", changefreq: "weekly" },
+  { path: "/persiana-solar-screen", priority: "0.9", changefreq: "weekly" },
+  { path: "/cortina-romana", priority: "0.9", changefreq: "weekly" },
+  { path: "/persiana-double-vision", priority: "0.9", changefreq: "weekly" },
+  { path: "/persiana-painel", priority: "0.9", changefreq: "weekly" },
+  { path: "/persiana-vertical", priority: "0.9", changefreq: "weekly" },
+  { path: "/persiana-horizontal", priority: "0.9", changefreq: "weekly" },
+  { path: "/persiana-rio-de-janeiro", priority: "0.8", changefreq: "weekly" },
+  { path: "/persiana-belo-horizonte", priority: "0.8", changefreq: "weekly" },
   { path: "/blog", priority: "0.8", changefreq: "daily" },
+  { path: "/politica-de-privacidade", priority: "0.3", changefreq: "monthly" },
+  { path: "/termos-de-uso", priority: "0.3", changefreq: "monthly" },
+  { path: "/trocas-e-devolucoes", priority: "0.4", changefreq: "monthly" },
+  { path: "/politica-de-entrega", priority: "0.4", changefreq: "monthly" },
 ];
 
 function urlEntry(loc: string, lastmod: string, changefreq: string, priority: string) {

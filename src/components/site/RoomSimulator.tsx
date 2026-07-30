@@ -17,12 +17,21 @@ import {
   Clock,
   Gift,
   ArrowLeftRight,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { simulateRoom } from "@/lib/simulate-room.functions";
 import { paletteFor, type FabricColor } from "@/lib/fabric-palettes";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteContact, whatsappLink } from "@/hooks/use-site-contact";
+import {
+  FabricSwatch,
+  fabricKindFromName,
+  fabricDescriptor,
+  shortFabricName,
+} from "@/components/site/FabricSwatch";
 
 type ColorOpt = { color: string; hex: string; img: string; swatch?: string };
 type Product = {
@@ -234,6 +243,7 @@ function StepHeader({ n, title }: { n: number; title: string }) {
 function RoomSimulatorInner() {
   const fileRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
+  const runSimulate = useServerFn(simulateRoom);
   const [original, setOriginal] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -380,6 +390,8 @@ function RoomSimulatorInner() {
   );
   const color = product?.thumbs[Math.min(colorIdx, (product?.thumbs.length ?? 1) - 1)];
   const category = catalog.categories.find((c) => c.id === categoryId);
+  // Trama do tecido selecionado — usada para desenhar as amostras de cor.
+  const selectedKind = fabricKindFromName(product?.name ?? "", category?.label);
 
   // A simulação por IA é cara — só roda quando o cliente clica em "Simular".
   // Trocar de cor/produto após a primeira geração limpa o resultado para
@@ -460,21 +472,20 @@ function RoomSimulatorInner() {
     setLoading(true);
     setResult(null);
     try {
-      const { data, error } = await supabase.functions.invoke("simulate-room", {
-        body: {
+      const data = await runSimulate({
+        data: {
           imageDataUrl: original,
           product: product.name,
           color: color.color,
           ambient: category?.label ?? "",
         },
       });
-      if (error) throw error;
       if (data?.imageUrl) {
         setResult(data.imageUrl);
         setCompare(50);
         toast.success("Simulação pronta!");
       } else if (data?.error) {
-        // Edge function devolveu erro tratado (rate limit, sem créditos, etc).
+        // Server function devolveu erro tratado (rate limit, sem créditos, etc).
         toast.error(data.error);
         // Fallback: compositor canvas para o cliente não ficar sem prévia.
         const url = await composeSimulation(original, product.cover, color.hex);
@@ -836,16 +847,24 @@ function RoomSimulatorInner() {
             {/* Passo 2 — Tecido / Acabamento */}
             <div className="mt-6">
               <StepHeader n={2} title="Tecido / Acabamento" />
-              <div className="mt-3 grid grid-cols-3 gap-2.5">
+              {/* Mostruário: cada linha é uma amostra do tecido desenhada em CSS
+                  (ver FabricSwatch). Antes eram cards com foto de banco de
+                  imagem que não carregava — sobrava alt-text no lugar da foto. */}
+              <div className="mt-3 space-y-1.5">
                 {catalogLoading && productsInCategory.length === 0 &&
                   Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="aspect-[4/5] animate-pulse rounded-xl bg-muted" />
+                    <div key={i} className="h-[62px] animate-pulse rounded-xl bg-muted" />
                   ))}
                 {!catalogLoading && productsInCategory.length === 0 && (
-                  <p className="col-span-3 text-xs text-muted-foreground">Nenhum produto cadastrado nesta categoria.</p>
+                  <p className="text-xs text-muted-foreground">Nenhum produto cadastrado nesta categoria.</p>
                 )}
                 {productsInCategory.map((p) => {
                   const active = productId === p.id;
+                  const kind = fabricKindFromName(p.name, category?.label);
+                  const swatchHex =
+                    (active
+                      ? p.thumbs[Math.min(colorIdx, p.thumbs.length - 1)]?.hex
+                      : p.thumbs[0]?.hex) ?? "#D8D3CB";
                   return (
                     <button
                       key={p.id}
@@ -854,32 +873,50 @@ function RoomSimulatorInner() {
                         setProductId(p.id);
                         setColorIdx(0);
                       }}
-                      className={`group relative overflow-hidden rounded-xl border-2 bg-background text-left transition ${
-                        active ? "border-primary shadow-glow" : "border-transparent hover:border-primary/40"
+                      aria-pressed={active}
+                      className={`group relative flex w-full items-center gap-3.5 overflow-hidden rounded-xl border px-3 py-2.5 text-left transition-all duration-300 ${
+                        active
+                          ? "border-primary/40 bg-primary/[0.055] shadow-[0_1px_0_rgba(0,0,0,.02),0_8px_24px_-16px_rgba(0,0,0,.35)]"
+                          : "border-border/70 bg-background/60 hover:border-primary/30 hover:bg-background"
                       }`}
                     >
-                      <div className="relative aspect-[4/5] overflow-hidden">
-                        <img
-                          src={p.cover}
-                          alt={p.name}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                        />
-                        {active && (
-                          <div className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
-                            <Check className="h-3.5 w-3.5" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="px-2 py-2">
-                        <div className="line-clamp-2 text-[11px] font-semibold leading-tight">{p.name}</div>
-                      </div>
+                      {/* filete de acento no selecionado */}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute inset-y-0 left-0 w-[3px] bg-primary transition-transform duration-300 ${
+                          active ? "scale-y-100" : "scale-y-0"
+                        }`}
+                      />
+                      <FabricSwatch
+                        hex={swatchHex}
+                        kind={kind}
+                        withHeadrail
+                        className={`h-[46px] w-[34px] shrink-0 rounded-[4px] shadow-sm transition-transform duration-300 ${
+                          active ? "scale-[1.06]" : "group-hover:scale-[1.03]"
+                        }`}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[13px] font-semibold leading-snug tracking-[-0.01em]">
+                          {shortFabricName(p.name, category?.label)}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[11px] leading-snug text-muted-foreground">
+                          {fabricDescriptor(kind)}
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${
+                          active
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border/80 bg-transparent text-transparent group-hover:border-primary/40"
+                        }`}
+                      >
+                        <Check className="h-3 w-3" strokeWidth={3} />
+                      </span>
                     </button>
                   );
                 })}
               </div>
-              {product?.description && (
-                <p className="mt-2 text-[11px] text-muted-foreground line-clamp-2">{product.description}</p>
-              )}
             </div>
 
             {/* Passo 3 — Cor */}
@@ -893,46 +930,53 @@ function RoomSimulatorInner() {
                   </span>
                 )}
               </div>
-              <div className="mt-3 grid grid-cols-5 gap-2 sm:gap-2.5">
+              {/* Amostras de cor com a trama do tecido selecionado, não bolinhas
+                  chapadas: a mesma cor lê muito diferente em screen e em blackout. */}
+              <div className="mt-3 grid grid-cols-5 gap-1.5 sm:gap-2">
                 {product?.thumbs.map((t, i) => {
                   const active = colorIdx === i;
                   return (
                     <button
-                      key={t.color}
+                      key={`${t.color}-${i}`}
                       type="button"
                       onClick={() => setColorIdx(i)}
                       title={t.color}
-                      className={`group relative flex flex-col items-center gap-1.5 rounded-xl p-1.5 transition ${
-                        active ? "bg-primary/10 ring-2 ring-primary" : "hover:bg-muted/70"
-                      }`}
+                      aria-pressed={active}
+                      className="group flex flex-col items-center gap-1.5 rounded-lg p-1 transition"
                     >
                       <span
-                        className="relative block h-12 w-12 overflow-hidden rounded-full border border-black/10 shadow-md ring-1 ring-white/40 sm:h-14 sm:w-14"
-                        style={{ backgroundColor: t.hex }}
+                        className={`relative block w-full overflow-hidden rounded-[4px] transition-all duration-300 ${
+                          active
+                            ? "ring-2 ring-primary ring-offset-2 ring-offset-card"
+                            : "ring-1 ring-black/10 group-hover:ring-primary/40"
+                        }`}
                       >
-                        {t.swatch && (
-                          <img
-                            src={t.swatch}
-                            alt=""
-                            aria-hidden
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
-                        )}
+                        <FabricSwatch
+                          hex={t.hex}
+                          kind={selectedKind}
+                          className={`block h-[52px] w-full transition-transform duration-500 ${
+                            active ? "scale-[1.04]" : "group-hover:scale-[1.02]"
+                          }`}
+                        />
                         {active && (
-                          <span className="absolute inset-0 flex items-center justify-center bg-black/30">
-                            <Check className="h-5 w-5 text-white drop-shadow" />
+                          <span className="pointer-events-none absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
+                            <Check className="h-2.5 w-2.5" strokeWidth={3.5} />
                           </span>
                         )}
                       </span>
-                      <span className="line-clamp-1 text-[10px] font-semibold leading-tight text-foreground/80">
+                      <span
+                        className={`line-clamp-1 text-[10px] leading-tight transition-colors ${
+                          active ? "font-bold text-foreground" : "font-medium text-muted-foreground"
+                        }`}
+                      >
                         {t.color}
                       </span>
                     </button>
                   );
                 })}
               </div>
-              <p className="mt-2 text-[11px] text-muted-foreground">
-                Toque em uma cor — a persiana é repintada na sua janela em segundos.
+              <p className="mt-2.5 text-[11px] leading-relaxed text-muted-foreground">
+                As amostras são uma representação da trama do tecido. Toque em uma cor — a persiana é repintada na sua janela em segundos.
               </p>
             </div>
 
@@ -982,56 +1026,133 @@ function RoomSimulatorInner() {
           </div>
         </div>
 
-        {/* ============ DICAS PARA UMA BOA FOTO ============ */}
-        <div className="mx-auto mt-14 max-w-5xl">
-          <div className="text-center">
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">Dica</span>
-            <h3 className="font-display mt-2 text-2xl sm:text-3xl">Fotos boas ficam ainda melhores</h3>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
-              A IA identifica a janela sozinha, mas fotos como essas geram resultados mais realistas.
-            </p>
-          </div>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: Maximize2, title: "Janela inteira no quadro", desc: "Do batente ao peitoril, sem cortar as bordas." },
-              { icon: Sun, title: "Luz natural do lado", desc: "Evite contraluz forte vindo direto da janela." },
-              { icon: Camera, title: "De frente, sem inclinar", desc: "Fique perpendicular à parede para não distorcer." },
-            ].map((t, i) => {
-              const Icon = t.icon;
-              return (
-                <div key={i} className="rounded-2xl border bg-card/70 p-5 backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="mt-3 font-display text-lg">{t.title}</div>
-                  <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+        {/* ============ DICAS PARA UMA BOA FOTO — layout editorial ============ */}
+        <div className="mx-auto mt-20 max-w-6xl">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+            {/* Coluna imagem — referência visual */}
+            <div className="lg:col-span-5">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-muted">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
+                  alt="Exemplo de foto ideal: janela enquadrada e luz natural"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/10" />
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-background/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground shadow-sm backdrop-blur">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Exemplo ideal
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
+            {/* Coluna conteúdo */}
+            <div className="lg:col-span-7 lg:pt-6">
+              <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-primary">
+                Guia rápido — 3 passos
+              </span>
+              <h3 className="font-display mt-3 text-3xl leading-[1.05] sm:text-4xl lg:text-[2.75rem]">
+                Fotos boas ficam
+                <br />
+                <span className="italic text-primary">ainda melhores.</span>
+              </h3>
+              <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+                A IA identifica a janela sozinha, mas seguir essas orientações eleva o realismo da simulação a um outro patamar.
+              </p>
+
+              <ol className="mt-8 divide-y divide-border/70 border-y border-border/70">
+                {[
+                  {
+                    icon: Maximize2,
+                    title: "Janela inteira no quadro",
+                    desc: "Enquadre do topo do batente até abaixo do peitoril, sem cortar as bordas.",
+                  },
+                  {
+                    icon: Sun,
+                    title: "Luz natural do lado",
+                    desc: "Evite contraluz direto. Prefira fotografar no início da manhã ou fim da tarde.",
+                  },
+                  {
+                    icon: Camera,
+                    title: "De frente, sem inclinar",
+                    desc: "Fique perpendicular à parede para preservar as proporções do vão.",
+                  },
+                ].map((t, i) => {
+                  const Icon = t.icon;
+                  return (
+                    <li key={i} className="group grid grid-cols-[auto_1fr_auto] items-start gap-5 py-5">
+                      <span className="font-display text-2xl text-muted-foreground/60 tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <div className="font-display text-lg leading-tight">{t.title}</div>
+                        <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+                      </div>
+                      <Icon className="mt-1 h-5 w-5 text-primary/80" />
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
           </div>
         </div>
 
-        {/* ============ CTA FINAL ============ */}
-        <div className="mx-auto mt-14 max-w-4xl overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-card p-8 text-center shadow-elegant sm:p-10">
-          <h3 className="font-display text-2xl sm:text-3xl">Gostou do que viu? Vamos medir juntos.</h3>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">
-            Nossa equipe faz a medição gratuita na sua casa em Juiz de Fora e região, e o produto chega instalado.
-          </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#orcamento"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold uppercase tracking-widest text-primary-foreground shadow-glow transition hover:-translate-y-0.5"
-            >
-              Pedir orçamento gratuito
-            </a>
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-bold uppercase tracking-widest transition hover:border-primary"
-            >
-              <MessageCircle className="h-4 w-4" /> Falar no WhatsApp
-            </a>
+        {/* ============ CTA FINAL — split editorial ============ */}
+        <div className="mx-auto mt-20 max-w-6xl overflow-hidden rounded-[4px] bg-foreground text-background shadow-elegant">
+          <div className="grid lg:grid-cols-2">
+            {/* Imagem */}
+            <div className="relative min-h-[280px] lg:min-h-[420px]">
+              <img
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80"
+                alt="Sala de estar com persianas Ágil instaladas"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-foreground/40 via-foreground/10 to-transparent lg:bg-gradient-to-l" />
+              <div className="absolute bottom-5 left-5 rounded-full bg-background/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-foreground">
+                Conferimos sua medida
+              </div>
+            </div>
+
+            {/* Conteúdo */}
+            <div className="relative flex flex-col justify-center gap-6 p-8 sm:p-12 lg:p-14">
+              <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-primary">
+                Próximo passo
+              </span>
+              <h3 className="font-display text-3xl leading-[1.05] sm:text-4xl lg:text-[2.5rem]">
+                Gostou do que viu?
+                <br />
+                <span className="italic text-primary">Vamos medir juntos.</span>
+              </h3>
+              {/* Não prometer medição em domicílio nem instalação: a Ágil
+                  fabrica e envia, o cliente instala. Também não citar cidade. */}
+              <p className="max-w-md text-[15px] leading-relaxed text-background/75">
+                A gente te ajuda a medir pelo WhatsApp — manda uma foto da janela com a fita esticada e nós conferimos antes de produzir. Envio para todo o Brasil.
+              </p>
+
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href="#orcamento"
+                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground shadow-glow transition hover:-translate-y-0.5"
+                >
+                  Pedir orçamento gratuito
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </a>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-background/25 bg-transparent px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-background transition hover:bg-background hover:text-foreground"
+                >
+                  <MessageCircle className="h-4 w-4" /> WhatsApp
+                </a>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.18em] text-background/60">
+                <span className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-primary" /> Sem compromisso</span>
+                <span className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-primary" /> Resposta em 24h</span>
+                <span className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-primary" /> Parcelamento 6×</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

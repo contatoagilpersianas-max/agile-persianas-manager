@@ -26,10 +26,10 @@ export function HowToMeasure() {
           <span className="text-xs uppercase tracking-widest text-primary font-semibold">Guia rápido</span>
           <h2 className="font-display text-3xl lg:text-4xl mt-2">Como medir sua janela</h2>
           <p className="text-muted-foreground mt-3 text-base leading-relaxed">
-            Em 3 passos você garante a medida perfeita. Se ficar em dúvida, nosso time mede por você via vídeo-chamada — gratuito.
+            Em 3 passos você garante a medida perfeita. Se ficar em dúvida, manda uma foto da janela com a fita métrica esticada no WhatsApp — a gente confere a medida com você antes de produzir.
           </p>
           <div className="mt-6 inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all cursor-pointer">
-            <Ruler className="h-4 w-4" /> Solicitar medição gratuita <ArrowRight className="h-4 w-4" />
+            <Ruler className="h-4 w-4" /> Conferir minha medida no WhatsApp <ArrowRight className="h-4 w-4" />
           </div>
         </div>
 

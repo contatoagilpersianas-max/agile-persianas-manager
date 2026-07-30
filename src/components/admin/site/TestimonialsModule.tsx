@@ -27,34 +27,19 @@ export type TestimonialsConfig = {
   items: Testimonial[];
 };
 
+// ⚠️ Padrões propositalmente VAZIOS e com a seção desligada.
+// Antes vinham preenchidos com 3 depoimentos fictícios e com os números
+// "+20 mil lares com Ágil" e "4.9/5 — 3.214 avaliações", que são afirmações
+// inventadas sobre o negócio — o tipo de alegação numérica específica que
+// caracteriza propaganda enganosa (CDC art. 37) se publicada sem base real.
+// Só ligue `enabled` depois de cadastrar depoimentos de clientes de verdade,
+// e só preencha `ratingSummary` com uma nota/contagem que você consiga comprovar.
 export const TESTIMONIALS_DEFAULTS: TestimonialsConfig = {
-  enabled: true,
+  enabled: false,
   eyebrow: "Quem comprou, recomenda",
-  title: "+20 mil lares com Ágil",
-  ratingSummary: "4.9/5 — 3.214 avaliações",
-  items: [
-    {
-      name: "Marina Lopes",
-      city: "São Paulo, SP",
-      rating: 5,
-      photo: "",
-      text: "Comprei rolô blackout para o quarto do bebê. Chegou perfeito, montei sozinha e o quarto fica totalmente escuro. Recomendo muito!",
-    },
-    {
-      name: "Rafael Andrade",
-      city: "Belo Horizonte, MG",
-      rating: 5,
-      photo: "",
-      text: "Atendimento via WhatsApp foi excelente. Tiraram todas as dúvidas sobre medida. Acabamento de primeira linha.",
-    },
-    {
-      name: "Juliana Castro",
-      city: "Curitiba, PR",
-      rating: 5,
-      photo: "",
-      text: "Já é a terceira persiana que compro com a Ágil. Tecido lindo, durável e o preço continua ótimo. Virei fã.",
-    },
-  ],
+  title: "O que dizem nossos clientes",
+  ratingSummary: "",
+  items: [],
 };
 const MAX = 12;
 

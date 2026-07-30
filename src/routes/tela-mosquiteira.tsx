@@ -15,7 +15,7 @@ const jsonLd = {
   "@type": "Product",
   name: "Tela Mosquiteira sob Medida",
   description:
-    "Telas mosquiteiras sob medida — fixa, retrátil, magnética e pet reforçada — para todas as janelas e portas com instalação profissional.",
+    "Telas mosquiteiras sob medida — fixa, retrátil, magnética e pet reforçada — para todas as janelas e portas, com envio para todo o Brasil e instalação simples pelo próprio cliente.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
   image: "https://agil2.lovable.app/og/tela-mosquiteira.jpg",
   offers: {

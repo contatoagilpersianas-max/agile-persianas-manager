@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Persiana horizontal sob medida em madeira, PVC ou alumínio — controle de luz preciso e visual atemporal.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/cat-horizontal.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/cat-horizontal.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -32,8 +32,8 @@ export const Route = createFileRoute("/persiana-horizontal")({
       { name: "keywords", content: "persiana horizontal, persiana de madeira, horizontal pvc, persiana alumínio" },
       { property: "og:title", content: "Persiana Horizontal sob Medida — Ágil Persianas" },
       { property: "og:description", content: "Madeira natural, PVC ou alumínio. Visual atemporal e controle de luz preciso." },
-      { property: "og:image", content: "https://agil2.lovable.app/og/cat-horizontal.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/cat-horizontal.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/cat-horizontal.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/cat-horizontal.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

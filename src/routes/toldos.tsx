@@ -17,7 +17,7 @@ const jsonLd = {
   description:
     "Toldos articulados, retráteis e fixos sob medida — sofisticação e conforto térmico para áreas externas.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/toldos.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/toldos.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -42,8 +42,8 @@ export const Route = createFileRoute("/toldos")({
         property: "og:description",
         content: "Viva ao ar livre com sofisticação. Toldos premium sob medida.",
       },
-      { property: "og:image", content: "https://agil2.lovable.app/og/toldos.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/toldos.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/toldos.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/toldos.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

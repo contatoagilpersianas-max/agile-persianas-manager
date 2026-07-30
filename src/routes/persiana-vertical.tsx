@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Persiana vertical sob medida — controle preciso de luz para escritórios, salas comerciais e ambientes amplos.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/cat-vertical.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/cat-vertical.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -32,8 +32,8 @@ export const Route = createFileRoute("/persiana-vertical")({
       { name: "keywords", content: "persiana vertical, vertical pvc, persiana de escritório, vertical tecido" },
       { property: "og:title", content: "Persiana Vertical sob Medida — Ágil Persianas" },
       { property: "og:description", content: "Lâminas giratórias para controle total da luz em escritórios e salas." },
-      { property: "og:image", content: "https://agil2.lovable.app/og/cat-vertical.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/cat-vertical.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/cat-vertical.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/cat-vertical.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

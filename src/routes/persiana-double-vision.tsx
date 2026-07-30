@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Persiana double vision (zebra) com faixas alternadas de tecido, controlando luz e visão com elegância.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/lp-doublevision.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/lp-doublevision.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -34,8 +34,8 @@ export const Route = createFileRoute("/persiana-double-vision")({
         property: "og:description",
         content: "Controle preciso de luz e privacidade com design contemporâneo.",
       },
-      { property: "og:image", content: "https://agil2.lovable.app/og/lp-doublevision.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/lp-doublevision.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-doublevision.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-doublevision.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

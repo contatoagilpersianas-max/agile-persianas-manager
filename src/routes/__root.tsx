@@ -42,8 +42,8 @@ const ORG_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Ágil Persianas",
-  url: "https://agil2.lovable.app",
-  logo: "https://agil2.lovable.app/og/agil-logo.png",
+  url: "https://agilpersianasecortinas.lovable.app",
+  logo: "https://agilpersianasecortinas.lovable.app/og/agil-logo.png",
   sameAs: [
     "https://www.instagram.com/agilpersianas",
     "https://www.facebook.com/agilpersianas",

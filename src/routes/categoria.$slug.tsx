@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { formatBRL } from "@/lib/cart";
 
 const PAGE_SIZE = 24;
-const SITE = "https://agil2.lovable.app";
+const SITE = "https://agilpersianasecortinas.lovable.app";
 const DEFAULT_OG =
   "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5171a845-35f3-4188-8ac2-9a322b547a7d/id-preview-6ba4c76c--e82f979a-13e1-4ed4-b867-203a2377e8d5.lovable.app-1776846844365.png";
 

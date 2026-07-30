@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Persiana solar screen sob medida com proteção UV, visão para fora e controle térmico. Ideal para escritórios e salas.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/lp-solar.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/lp-solar.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -36,8 +36,8 @@ export const Route = createFileRoute("/persiana-solar-screen")({
         content:
           "Filtra UV, reduz calor e preserva a vista. Sob medida com tecidos premium.",
       },
-      { property: "og:image", content: "https://agil2.lovable.app/og/lp-solar.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/lp-solar.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-solar.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-solar.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

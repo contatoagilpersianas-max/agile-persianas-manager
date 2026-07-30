@@ -3,7 +3,7 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 /**
  * Webhook público do Asaas.
- * URL pública: https://agil2.lovable.app/api/public/asaas-webhook
+ * URL pública: https://agilpersianasecortinas.lovable.app/api/public/asaas-webhook
  *
  * Configure essa URL em: Asaas → Integrações → Webhooks (eventos de cobrança).
  *

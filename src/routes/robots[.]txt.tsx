@@ -9,7 +9,7 @@ Allow: /
 Disallow: /admin
 Disallow: /auth
 
-Sitemap: https://agil2.lovable.app/sitemap.xml
+Sitemap: https://agilpersianasecortinas.lovable.app/sitemap.xml
 `;
         return new Response(body, {
           headers: {

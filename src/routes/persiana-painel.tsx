@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Painel deslizante japonês sob medida — solução elegante para grandes vãos, divisórias e portas de vidro.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/cat-painel.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/cat-painel.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -32,8 +32,8 @@ export const Route = createFileRoute("/persiana-painel")({
       { name: "keywords", content: "painel japonês, persiana painel, painel deslizante, divisória de tecido" },
       { property: "og:title", content: "Painel Japonês sob Medida — Ágil Persianas" },
       { property: "og:description", content: "Elegância oriental para grandes vãos. Trilho silencioso e tecidos premium." },
-      { property: "og:image", content: "https://agil2.lovable.app/og/cat-painel.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/cat-painel.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/cat-painel.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/cat-painel.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

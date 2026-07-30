@@ -17,7 +17,7 @@ const jsonLd = {
   description:
     "Telas mosquiteiras sob medida — fixa, retrátil, magnética e pet reforçada — para todas as janelas e portas, com envio para todo o Brasil e instalação simples pelo próprio cliente.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/tela-mosquiteira.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/tela-mosquiteira.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -43,8 +43,8 @@ export const Route = createFileRoute("/tela-mosquiteira")({
         content:
           "Proteção total contra mosquitos, dengue e insetos sem perder a ventilação natural.",
       },
-      { property: "og:image", content: "https://agil2.lovable.app/og/tela-mosquiteira.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/tela-mosquiteira.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/tela-mosquiteira.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/tela-mosquiteira.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

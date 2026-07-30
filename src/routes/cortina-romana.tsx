@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Cortina romana sob medida com tecidos premium, dobras perfeitas e acabamento sofisticado.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/lp-romana.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/lp-romana.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -35,8 +35,8 @@ export const Route = createFileRoute("/cortina-romana")({
         property: "og:description",
         content: "Dobras impecáveis, tecidos premium e instalação em todo o Brasil.",
       },
-      { property: "og:image", content: "https://agil2.lovable.app/og/lp-romana.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/lp-romana.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-romana.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-romana.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],

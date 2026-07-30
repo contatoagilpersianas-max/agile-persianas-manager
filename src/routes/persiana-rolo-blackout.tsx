@@ -9,7 +9,7 @@ const jsonLd = {
   description:
     "Persiana rolô blackout sob medida com bloqueio total de luz, tecido premium e instalação em todo o Brasil.",
   brand: { "@type": "Brand", name: "Ágil Persianas" },
-  image: "https://agil2.lovable.app/og/lp-blackout.jpg",
+  image: "https://agilpersianasecortinas.lovable.app/og/lp-blackout.jpg",
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "BRL",
@@ -35,8 +35,8 @@ export const Route = createFileRoute("/persiana-rolo-blackout")({
         property: "og:description",
         content: "Bloqueio total de luz, sono perfeito. Sob medida.",
       },
-      { property: "og:image", content: "https://agil2.lovable.app/og/lp-blackout.jpg" },
-      { name: "twitter:image", content: "https://agil2.lovable.app/og/lp-blackout.jpg" },
+      { property: "og:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-blackout.jpg" },
+      { name: "twitter:image", content: "https://agilpersianasecortinas.lovable.app/og/lp-blackout.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [

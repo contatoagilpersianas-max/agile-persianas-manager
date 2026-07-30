@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { blogPosts } from "@/lib/blog-posts";
 import { supabase } from "@/integrations/supabase/client";
 
-const SITE = "https://agil2.lovable.app";
+const SITE = "https://agilpersianasecortinas.lovable.app";
 
 const STATIC_PAGES = [
   { path: "/", priority: "1.0", changefreq: "daily" },

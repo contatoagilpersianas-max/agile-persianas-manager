@@ -294,7 +294,7 @@ function CatalogoPage() {
             </Link>
             <Link
               to="/catalogo"
-              search={(prev) => ({ ...prev, bestseller: "1", categoria: undefined, ambiente: undefined, page: undefined })}
+              search={(prev: Record<string, unknown>) => ({ ...prev, bestseller: "1", categoria: undefined, ambiente: undefined, page: undefined })}
               className={`inline-flex h-9 items-center rounded-full border px-4 text-xs font-semibold transition ${
                 onlyBestsellers
                   ? "border-primary bg-primary text-primary-foreground"
@@ -309,7 +309,7 @@ function CatalogoPage() {
                 <Link
                   key={c.id}
                   to="/catalogo"
-                  search={(prev) => ({ ...prev, categoria: c.slug, bestseller: undefined, ambiente: undefined, page: undefined })}
+                  search={(prev: Record<string, unknown>) => ({ ...prev, categoria: c.slug, bestseller: undefined, ambiente: undefined, page: undefined })}
                   className={`inline-flex h-9 items-center rounded-full border px-4 text-xs font-semibold whitespace-nowrap transition ${
                     active
                       ? "border-primary bg-primary text-primary-foreground"

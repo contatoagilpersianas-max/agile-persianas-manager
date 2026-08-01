@@ -57,7 +57,7 @@ const DEFAULT_COLS: FooterColumn[] = [
 const DEFAULT_FOOTER: FooterCfg = {
   intro: "Transformando ambientes com persianas, cortinas e toldos sob medida — entrega para todo o Brasil.",
   columns: DEFAULT_COLS,
-  copyright: `© ${new Date().getFullYear()} ${SITE_CONFIG.brand} — CNPJ ${SITE_CONFIG.cnpj}. Todos os direitos reservados.`,
+  copyright: `© ${Math.max(new Date().getFullYear(), 2026)} ${SITE_CONFIG.brand} — CNPJ ${SITE_CONFIG.cnpj}. Todos os direitos reservados.`,
 };
 
 export function Footer() {

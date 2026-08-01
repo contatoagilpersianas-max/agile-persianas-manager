@@ -43,6 +43,7 @@ export function CategoryNav() {
 
   const [openId, setOpenId] = useState<string | null>(null);
   const [hoverSubId, setHoverSubId] = useState<string | null>(null);
+  const [expandedSubs, setExpandedSubs] = useState<string[]>([]);
   const navRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -61,6 +62,8 @@ export function CategoryNav() {
     cancelClose();
     setOpenId(id);
     setHoverSubId(null);
+    const first = visibleCats.find((c) => c.parent_id === id && visibleCats.some((g) => g.parent_id === c.id));
+    setExpandedSubs(first ? [first.id] : []);
   };
   const closeAll = () => {
     cancelClose();
@@ -194,73 +197,63 @@ export function CategoryNav() {
           id={`megamenu-${openCat.id}`}
           role="region"
           aria-label={`Submenu ${openCat.name}`}
-          className="absolute left-0 right-0 top-full z-50 border-t border-border/60 bg-[#f5f5f5] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] animate-in fade-in slide-in-from-top-1 duration-150"
+          className="absolute left-0 top-full z-50 w-[min(92vw,380px)] border border-border/50 bg-background shadow-[0_20px_40px_-15px_rgba(0,0,0,0.25)] animate-in fade-in slide-in-from-top-1 duration-150"
           onMouseEnter={cancelClose}
           onMouseLeave={() => !isMobile && scheduleClose()}
         >
-          <div className="container-premium">
-            <div className="grid gap-6 py-6 lg:grid-cols-[1fr_360px] max-h-[min(75vh,560px)] overflow-y-auto">
-              {/* Coluna de subcategorias agrupadas */}
-              <div className="grid gap-3 sm:grid-cols-2">
-                {openSubs.map((sub) => {
-                  const subGrand = childrenOf(sub.id);
-                  return (
-                    <div
-                      key={sub.id}
-                      className="rounded-md bg-background border border-border/50 overflow-hidden"
+          <div className="max-h-[min(75vh,560px)] overflow-y-auto py-2">
+            {openSubs.map((sub) => {
+              const subGrand = childrenOf(sub.id);
+              const expanded = expandedSubs.includes(sub.id);
+              const isCard = expanded && subGrand.length > 0;
+              return (
+                <div key={sub.id} className={`mx-2 my-1 rounded-md ${isCard ? "bg-muted/70" : ""}`}>
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3">
+                    <Link
+                      data-mega-link
+                      to="/categoria/$slug"
+                      params={{ slug: sub.slug }}
+                      onClick={closeAll}
+                      className="min-w-0 truncate py-3 text-[14px] text-foreground/90 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
                     >
-                      <Link
-                        data-mega-link
-                        to="/categoria/$slug"
-                        params={{ slug: sub.slug }}
-                        onClick={closeAll}
-                        className="flex items-center justify-between gap-2 px-4 py-2.5 text-[13px] font-medium text-foreground/90 hover:text-primary focus-visible:outline-none"
+                      {sub.name}
+                    </Link>
+                    {subGrand.length > 0 && (
+                      <button
+                        type="button"
+                        aria-expanded={expanded}
+                        aria-label={`${expanded ? "Recolher" : "Expandir"} ${sub.name}`}
+                        onClick={() =>
+                          setExpandedSubs((prev) =>
+                            prev.includes(sub.id) ? prev.filter((i) => i !== sub.id) : [...prev, sub.id],
+                          )
+                        }
+                        className="grid h-7 w-7 shrink-0 place-items-center rounded border border-primary/40 bg-background text-primary transition hover:bg-primary/10"
                       >
-                        <span className="truncate">{sub.name}</span>
-                        {subGrand.length > 0 && (
-                          <ChevronDown className="h-3.5 w-3.5 rotate-180 text-primary" aria-hidden />
-                        )}
-                      </Link>
-                      {subGrand.length > 0 && (
-                        <ul className="border-t border-border/50 px-4 py-2 space-y-1.5">
-                          {subGrand.map((g) => (
-                            <li key={g.id}>
-                              <Link
-                                to="/categoria/$slug"
-                                params={{ slug: g.slug }}
-                                onClick={closeAll}
-                                className="block truncate text-[13.5px] text-foreground/80 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
-                              >
-                                {g.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Imagem lateral (visível em lg+) */}
-              {openCat.icon && (
-                <Link
-                  to="/categoria/$slug"
-                  params={{ slug: openCat.slug }}
-                  onClick={closeAll}
-                  className="hidden lg:block relative overflow-hidden rounded-md bg-muted group"
-                  aria-label={`Ver ${openCat.name}`}
-                >
-                  <img
-                    src={openCat.icon}
-                    alt={openCat.name}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </Link>
-              )}
-            </div>
-            <div className="border-t border-border/60 py-3 text-right">
+                        <ChevronDown className={`h-4 w-4 transition ${expanded ? "rotate-180" : ""}`} aria-hidden />
+                      </button>
+                    )}
+                  </div>
+                  {expanded && subGrand.length > 0 && (
+                    <ul className="pb-2">
+                      {subGrand.map((g) => (
+                        <li key={g.id}>
+                          <Link
+                            to="/categoria/$slug"
+                            params={{ slug: g.slug }}
+                            onClick={closeAll}
+                            className="block px-6 py-2.5 text-[14px] leading-snug text-foreground/80 transition hover:text-primary focus-visible:text-primary focus-visible:outline-none"
+                          >
+                            {g.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+            <div className="mt-1 border-t border-border/60 px-4 py-3">
               <Link
                 to="/categoria/$slug"
                 params={{ slug: openCat.slug }}

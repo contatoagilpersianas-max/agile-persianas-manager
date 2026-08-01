@@ -9,156 +9,60 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CatalogoRouteImport } from './routes/catalogo'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as CortinaRomanaRouteImport } from './routes/cortina-romana'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as PersianaBeloHorizonteRouteImport } from './routes/persiana-belo-horizonte'
-import { Route as PersianaDoubleVisionRouteImport } from './routes/persiana-double-vision'
-import { Route as PersianaHorizontalRouteImport } from './routes/persiana-horizontal'
-import { Route as PersianaPainelRouteImport } from './routes/persiana-painel'
-import { Route as PersianaRioDeJaneiroRouteImport } from './routes/persiana-rio-de-janeiro'
-import { Route as PersianaRoloBlackoutRouteImport } from './routes/persiana-rolo-blackout'
-import { Route as PersianaSolarScreenRouteImport } from './routes/persiana-solar-screen'
-import { Route as PersianaVerticalRouteImport } from './routes/persiana-vertical'
-import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
-import { Route as RoloBlackoutPinpointRouteImport } from './routes/rolo-blackout-pinpoint'
-import { Route as RoloBlackoutTexturizadoRouteImport } from './routes/rolo-blackout-texturizado'
-import { Route as SimuladorRouteImport } from './routes/simulador'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as TelaMosquiteiraRouteImport } from './routes/tela-mosquiteira'
+import { Route as TrocasEDevolucoesRouteImport } from './routes/trocas-e-devolucoes'
 import { Route as ToldosRouteImport } from './routes/toldos'
-import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AdminCatalogoRouteImport } from './routes/admin.catalogo'
-import { Route as AdminCategoriasRouteImport } from './routes/admin.categorias'
-import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
-import { Route as AdminFinanceiroRouteImport } from './routes/admin.financeiro'
-import { Route as AdminIaRouteImport } from './routes/admin.ia'
-import { Route as AdminImagensRouteImport } from './routes/admin.imagens'
-import { Route as AdminIntegracoesRouteImport } from './routes/admin.integracoes'
-import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
-import { Route as AdminLumiRouteImport } from './routes/admin.lumi'
-import { Route as AdminLumiConfigRouteImport } from './routes/admin.lumi-config'
-import { Route as AdminMarketingRouteImport } from './routes/admin.marketing'
-import { Route as AdminOrcamentosRouteImport } from './routes/admin.orcamentos'
-import { Route as AdminPedidosRouteImport } from './routes/admin.pedidos'
-import { Route as AdminProducaoRouteImport } from './routes/admin.producao'
-import { Route as AdminRelatoriosRouteImport } from './routes/admin.relatorios'
-import { Route as AdminSiteRouteImport } from './routes/admin.site'
-import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
+import { Route as TermosDeUsoRouteImport } from './routes/termos-de-uso'
+import { Route as TelaMosquiteiraRouteImport } from './routes/tela-mosquiteira'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SimuladorRouteImport } from './routes/simulador'
+import { Route as RoloBlackoutTexturizadoRouteImport } from './routes/rolo-blackout-texturizado'
+import { Route as RoloBlackoutPinpointRouteImport } from './routes/rolo-blackout-pinpoint'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as PoliticaDeEntregaRouteImport } from './routes/politica-de-entrega'
+import { Route as PersianaVerticalRouteImport } from './routes/persiana-vertical'
+import { Route as PersianaSolarScreenRouteImport } from './routes/persiana-solar-screen'
+import { Route as PersianaRoloBlackoutRouteImport } from './routes/persiana-rolo-blackout'
+import { Route as PersianaRioDeJaneiroRouteImport } from './routes/persiana-rio-de-janeiro'
+import { Route as PersianaPainelRouteImport } from './routes/persiana-painel'
+import { Route as PersianaHorizontalRouteImport } from './routes/persiana-horizontal'
+import { Route as PersianaDoubleVisionRouteImport } from './routes/persiana-double-vision'
+import { Route as PersianaBeloHorizonteRouteImport } from './routes/persiana-belo-horizonte'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CortinaRomanaRouteImport } from './routes/cortina-romana'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as CatalogoRouteImport } from './routes/catalogo'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
-import { Route as PedidoNumeroRouteImport } from './routes/pedido.$numero'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProdutoSlugRouteImport } from './routes/produto.$slug'
+import { Route as PedidoNumeroRouteImport } from './routes/pedido.$numero'
+import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
+import { Route as AdminSiteRouteImport } from './routes/admin.site'
+import { Route as AdminRelatoriosRouteImport } from './routes/admin.relatorios'
+import { Route as AdminProducaoRouteImport } from './routes/admin.producao'
+import { Route as AdminPedidosRouteImport } from './routes/admin.pedidos'
+import { Route as AdminOrcamentosRouteImport } from './routes/admin.orcamentos'
+import { Route as AdminMarketingRouteImport } from './routes/admin.marketing'
+import { Route as AdminLumiConfigRouteImport } from './routes/admin.lumi-config'
+import { Route as AdminLumiRouteImport } from './routes/admin.lumi'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminIntegracoesRouteImport } from './routes/admin.integracoes'
+import { Route as AdminImagensRouteImport } from './routes/admin.imagens'
+import { Route as AdminIaRouteImport } from './routes/admin.ia'
+import { Route as AdminFinanceiroRouteImport } from './routes/admin.financeiro'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
+import { Route as AdminCategoriasRouteImport } from './routes/admin.categorias'
+import { Route as AdminCatalogoRouteImport } from './routes/admin.catalogo'
 import { Route as ApiPublicAsaasWebhookRouteImport } from './routes/api.public.asaas-webhook'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CatalogoRoute = CatalogoRouteImport.update({
-  id: '/catalogo',
-  path: '/catalogo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CortinaRomanaRoute = CortinaRomanaRouteImport.update({
-  id: '/cortina-romana',
-  path: '/cortina-romana',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaBeloHorizonteRoute = PersianaBeloHorizonteRouteImport.update({
-  id: '/persiana-belo-horizonte',
-  path: '/persiana-belo-horizonte',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaDoubleVisionRoute = PersianaDoubleVisionRouteImport.update({
-  id: '/persiana-double-vision',
-  path: '/persiana-double-vision',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaHorizontalRoute = PersianaHorizontalRouteImport.update({
-  id: '/persiana-horizontal',
-  path: '/persiana-horizontal',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaPainelRoute = PersianaPainelRouteImport.update({
-  id: '/persiana-painel',
-  path: '/persiana-painel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaRioDeJaneiroRoute = PersianaRioDeJaneiroRouteImport.update({
-  id: '/persiana-rio-de-janeiro',
-  path: '/persiana-rio-de-janeiro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaRoloBlackoutRoute = PersianaRoloBlackoutRouteImport.update({
-  id: '/persiana-rolo-blackout',
-  path: '/persiana-rolo-blackout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaSolarScreenRoute = PersianaSolarScreenRouteImport.update({
-  id: '/persiana-solar-screen',
-  path: '/persiana-solar-screen',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PersianaVerticalRoute = PersianaVerticalRouteImport.update({
-  id: '/persiana-vertical',
-  path: '/persiana-vertical',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
-  id: '/robots.txt',
-  path: '/robots.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoloBlackoutPinpointRoute = RoloBlackoutPinpointRouteImport.update({
-  id: '/rolo-blackout-pinpoint',
-  path: '/rolo-blackout-pinpoint',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoloBlackoutTexturizadoRoute = RoloBlackoutTexturizadoRouteImport.update({
-  id: '/rolo-blackout-texturizado',
-  path: '/rolo-blackout-texturizado',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SimuladorRoute = SimuladorRouteImport.update({
-  id: '/simulador',
-  path: '/simulador',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TelaMosquiteiraRoute = TelaMosquiteiraRouteImport.update({
-  id: '/tela-mosquiteira',
-  path: '/tela-mosquiteira',
+const TrocasEDevolucoesRoute = TrocasEDevolucoesRouteImport.update({
+  id: '/trocas-e-devolucoes',
+  path: '/trocas-e-devolucoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToldosRoute = ToldosRouteImport.update({
@@ -166,109 +70,139 @@ const ToldosRoute = ToldosRouteImport.update({
   path: '/toldos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRoute,
+const TermosDeUsoRoute = TermosDeUsoRouteImport.update({
+  id: '/termos-de-uso',
+  path: '/termos-de-uso',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminCatalogoRoute = AdminCatalogoRouteImport.update({
+const TelaMosquiteiraRoute = TelaMosquiteiraRouteImport.update({
+  id: '/tela-mosquiteira',
+  path: '/tela-mosquiteira',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimuladorRoute = SimuladorRouteImport.update({
+  id: '/simulador',
+  path: '/simulador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoloBlackoutTexturizadoRoute = RoloBlackoutTexturizadoRouteImport.update({
+  id: '/rolo-blackout-texturizado',
+  path: '/rolo-blackout-texturizado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoloBlackoutPinpointRoute = RoloBlackoutPinpointRouteImport.update({
+  id: '/rolo-blackout-pinpoint',
+  path: '/rolo-blackout-pinpoint',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
+  id: '/politica-de-privacidade',
+  path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDeEntregaRoute = PoliticaDeEntregaRouteImport.update({
+  id: '/politica-de-entrega',
+  path: '/politica-de-entrega',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaVerticalRoute = PersianaVerticalRouteImport.update({
+  id: '/persiana-vertical',
+  path: '/persiana-vertical',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaSolarScreenRoute = PersianaSolarScreenRouteImport.update({
+  id: '/persiana-solar-screen',
+  path: '/persiana-solar-screen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaRoloBlackoutRoute = PersianaRoloBlackoutRouteImport.update({
+  id: '/persiana-rolo-blackout',
+  path: '/persiana-rolo-blackout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaRioDeJaneiroRoute = PersianaRioDeJaneiroRouteImport.update({
+  id: '/persiana-rio-de-janeiro',
+  path: '/persiana-rio-de-janeiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaPainelRoute = PersianaPainelRouteImport.update({
+  id: '/persiana-painel',
+  path: '/persiana-painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaHorizontalRoute = PersianaHorizontalRouteImport.update({
+  id: '/persiana-horizontal',
+  path: '/persiana-horizontal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaDoubleVisionRoute = PersianaDoubleVisionRouteImport.update({
+  id: '/persiana-double-vision',
+  path: '/persiana-double-vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersianaBeloHorizonteRoute = PersianaBeloHorizonteRouteImport.update({
+  id: '/persiana-belo-horizonte',
+  path: '/persiana-belo-horizonte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CortinaRomanaRoute = CortinaRomanaRouteImport.update({
+  id: '/cortina-romana',
+  path: '/cortina-romana',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogoRoute = CatalogoRouteImport.update({
   id: '/catalogo',
   path: '/catalogo',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminCategoriasRoute = AdminCategoriasRouteImport.update({
-  id: '/categorias',
-  path: '/categorias',
-  getParentRoute: () => AdminRoute,
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => AdminRoute,
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminFinanceiroRoute = AdminFinanceiroRouteImport.update({
-  id: '/financeiro',
-  path: '/financeiro',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminIaRoute = AdminIaRouteImport.update({
-  id: '/ia',
-  path: '/ia',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminImagensRoute = AdminImagensRouteImport.update({
-  id: '/imagens',
-  path: '/imagens',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminIntegracoesRoute = AdminIntegracoesRouteImport.update({
-  id: '/integracoes',
-  path: '/integracoes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLeadsRoute = AdminLeadsRouteImport.update({
-  id: '/leads',
-  path: '/leads',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLumiRoute = AdminLumiRouteImport.update({
-  id: '/lumi',
-  path: '/lumi',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLumiConfigRoute = AdminLumiConfigRouteImport.update({
-  id: '/lumi-config',
-  path: '/lumi-config',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminMarketingRoute = AdminMarketingRouteImport.update({
-  id: '/marketing',
-  path: '/marketing',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminOrcamentosRoute = AdminOrcamentosRouteImport.update({
-  id: '/orcamentos',
-  path: '/orcamentos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPedidosRoute = AdminPedidosRouteImport.update({
-  id: '/pedidos',
-  path: '/pedidos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminProducaoRoute = AdminProducaoRouteImport.update({
-  id: '/producao',
-  path: '/producao',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminRelatoriosRoute = AdminRelatoriosRouteImport.update({
-  id: '/relatorios',
-  path: '/relatorios',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSiteRoute = AdminSiteRouteImport.update({
-  id: '/site',
-  path: '/site',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
-  id: '/usuarios',
-  path: '/usuarios',
-  getParentRoute: () => AdminRoute,
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
-const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
-  id: '/categoria/$slug',
-  path: '/categoria/$slug',
+const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
+  id: '/produto/$slug',
+  path: '/produto/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PedidoNumeroRoute = PedidoNumeroRouteImport.update({
@@ -276,10 +210,100 @@ const PedidoNumeroRoute = PedidoNumeroRouteImport.update({
   path: '/pedido/$numero',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
-  id: '/produto/$slug',
-  path: '/produto/$slug',
+const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
+  id: '/categoria/$slug',
+  path: '/categoria/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSiteRoute = AdminSiteRouteImport.update({
+  id: '/site',
+  path: '/site',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRelatoriosRoute = AdminRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProducaoRoute = AdminProducaoRouteImport.update({
+  id: '/producao',
+  path: '/producao',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPedidosRoute = AdminPedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOrcamentosRoute = AdminOrcamentosRouteImport.update({
+  id: '/orcamentos',
+  path: '/orcamentos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMarketingRoute = AdminMarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLumiConfigRoute = AdminLumiConfigRouteImport.update({
+  id: '/lumi-config',
+  path: '/lumi-config',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLumiRoute = AdminLumiRouteImport.update({
+  id: '/lumi',
+  path: '/lumi',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminIntegracoesRoute = AdminIntegracoesRouteImport.update({
+  id: '/integracoes',
+  path: '/integracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminImagensRoute = AdminImagensRouteImport.update({
+  id: '/imagens',
+  path: '/imagens',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminIaRoute = AdminIaRouteImport.update({
+  id: '/ia',
+  path: '/ia',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFinanceiroRoute = AdminFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriasRoute = AdminCategoriasRouteImport.update({
+  id: '/categorias',
+  path: '/categorias',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCatalogoRoute = AdminCatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ApiPublicAsaasWebhookRoute = ApiPublicAsaasWebhookRouteImport.update({
   id: '/api/public/asaas-webhook',
@@ -303,13 +327,17 @@ export interface FileRoutesByFullPath {
   '/persiana-rolo-blackout': typeof PersianaRoloBlackoutRoute
   '/persiana-solar-screen': typeof PersianaSolarScreenRoute
   '/persiana-vertical': typeof PersianaVerticalRoute
+  '/politica-de-entrega': typeof PoliticaDeEntregaRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/rolo-blackout-pinpoint': typeof RoloBlackoutPinpointRoute
   '/rolo-blackout-texturizado': typeof RoloBlackoutTexturizadoRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tela-mosquiteira': typeof TelaMosquiteiraRoute
+  '/termos-de-uso': typeof TermosDeUsoRoute
   '/toldos': typeof ToldosRoute
+  '/trocas-e-devolucoes': typeof TrocasEDevolucoesRoute
   '/admin/catalogo': typeof AdminCatalogoRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -350,13 +378,17 @@ export interface FileRoutesByTo {
   '/persiana-rolo-blackout': typeof PersianaRoloBlackoutRoute
   '/persiana-solar-screen': typeof PersianaSolarScreenRoute
   '/persiana-vertical': typeof PersianaVerticalRoute
+  '/politica-de-entrega': typeof PoliticaDeEntregaRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/rolo-blackout-pinpoint': typeof RoloBlackoutPinpointRoute
   '/rolo-blackout-texturizado': typeof RoloBlackoutTexturizadoRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tela-mosquiteira': typeof TelaMosquiteiraRoute
+  '/termos-de-uso': typeof TermosDeUsoRoute
   '/toldos': typeof ToldosRoute
+  '/trocas-e-devolucoes': typeof TrocasEDevolucoesRoute
   '/admin/catalogo': typeof AdminCatalogoRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -399,13 +431,17 @@ export interface FileRoutesById {
   '/persiana-rolo-blackout': typeof PersianaRoloBlackoutRoute
   '/persiana-solar-screen': typeof PersianaSolarScreenRoute
   '/persiana-vertical': typeof PersianaVerticalRoute
+  '/politica-de-entrega': typeof PoliticaDeEntregaRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/rolo-blackout-pinpoint': typeof RoloBlackoutPinpointRoute
   '/rolo-blackout-texturizado': typeof RoloBlackoutTexturizadoRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tela-mosquiteira': typeof TelaMosquiteiraRoute
+  '/termos-de-uso': typeof TermosDeUsoRoute
   '/toldos': typeof ToldosRoute
+  '/trocas-e-devolucoes': typeof TrocasEDevolucoesRoute
   '/admin/catalogo': typeof AdminCatalogoRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -449,13 +485,17 @@ export interface FileRouteTypes {
     | '/persiana-rolo-blackout'
     | '/persiana-solar-screen'
     | '/persiana-vertical'
+    | '/politica-de-entrega'
+    | '/politica-de-privacidade'
     | '/robots.txt'
     | '/rolo-blackout-pinpoint'
     | '/rolo-blackout-texturizado'
     | '/simulador'
     | '/sitemap.xml'
     | '/tela-mosquiteira'
+    | '/termos-de-uso'
     | '/toldos'
+    | '/trocas-e-devolucoes'
     | '/admin/catalogo'
     | '/admin/categorias'
     | '/admin/configuracoes'
@@ -496,13 +536,17 @@ export interface FileRouteTypes {
     | '/persiana-rolo-blackout'
     | '/persiana-solar-screen'
     | '/persiana-vertical'
+    | '/politica-de-entrega'
+    | '/politica-de-privacidade'
     | '/robots.txt'
     | '/rolo-blackout-pinpoint'
     | '/rolo-blackout-texturizado'
     | '/simulador'
     | '/sitemap.xml'
     | '/tela-mosquiteira'
+    | '/termos-de-uso'
     | '/toldos'
+    | '/trocas-e-devolucoes'
     | '/admin/catalogo'
     | '/admin/categorias'
     | '/admin/configuracoes'
@@ -544,13 +588,17 @@ export interface FileRouteTypes {
     | '/persiana-rolo-blackout'
     | '/persiana-solar-screen'
     | '/persiana-vertical'
+    | '/politica-de-entrega'
+    | '/politica-de-privacidade'
     | '/robots.txt'
     | '/rolo-blackout-pinpoint'
     | '/rolo-blackout-texturizado'
     | '/simulador'
     | '/sitemap.xml'
     | '/tela-mosquiteira'
+    | '/termos-de-uso'
     | '/toldos'
+    | '/trocas-e-devolucoes'
     | '/admin/catalogo'
     | '/admin/categorias'
     | '/admin/configuracoes'
@@ -593,13 +641,17 @@ export interface RootRouteChildren {
   PersianaRoloBlackoutRoute: typeof PersianaRoloBlackoutRoute
   PersianaSolarScreenRoute: typeof PersianaSolarScreenRoute
   PersianaVerticalRoute: typeof PersianaVerticalRoute
+  PoliticaDeEntregaRoute: typeof PoliticaDeEntregaRoute
+  PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   RoloBlackoutPinpointRoute: typeof RoloBlackoutPinpointRoute
   RoloBlackoutTexturizadoRoute: typeof RoloBlackoutTexturizadoRoute
   SimuladorRoute: typeof SimuladorRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TelaMosquiteiraRoute: typeof TelaMosquiteiraRoute
+  TermosDeUsoRoute: typeof TermosDeUsoRoute
   ToldosRoute: typeof ToldosRoute
+  TrocasEDevolucoesRoute: typeof TrocasEDevolucoesRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   PedidoNumeroRoute: typeof PedidoNumeroRoute
@@ -610,151 +662,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/catalogo': {
-      id: '/catalogo'
-      path: '/catalogo'
-      fullPath: '/catalogo'
-      preLoaderRoute: typeof CatalogoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cortina-romana': {
-      id: '/cortina-romana'
-      path: '/cortina-romana'
-      fullPath: '/cortina-romana'
-      preLoaderRoute: typeof CortinaRomanaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-belo-horizonte': {
-      id: '/persiana-belo-horizonte'
-      path: '/persiana-belo-horizonte'
-      fullPath: '/persiana-belo-horizonte'
-      preLoaderRoute: typeof PersianaBeloHorizonteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-double-vision': {
-      id: '/persiana-double-vision'
-      path: '/persiana-double-vision'
-      fullPath: '/persiana-double-vision'
-      preLoaderRoute: typeof PersianaDoubleVisionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-horizontal': {
-      id: '/persiana-horizontal'
-      path: '/persiana-horizontal'
-      fullPath: '/persiana-horizontal'
-      preLoaderRoute: typeof PersianaHorizontalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-painel': {
-      id: '/persiana-painel'
-      path: '/persiana-painel'
-      fullPath: '/persiana-painel'
-      preLoaderRoute: typeof PersianaPainelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-rio-de-janeiro': {
-      id: '/persiana-rio-de-janeiro'
-      path: '/persiana-rio-de-janeiro'
-      fullPath: '/persiana-rio-de-janeiro'
-      preLoaderRoute: typeof PersianaRioDeJaneiroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-rolo-blackout': {
-      id: '/persiana-rolo-blackout'
-      path: '/persiana-rolo-blackout'
-      fullPath: '/persiana-rolo-blackout'
-      preLoaderRoute: typeof PersianaRoloBlackoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-solar-screen': {
-      id: '/persiana-solar-screen'
-      path: '/persiana-solar-screen'
-      fullPath: '/persiana-solar-screen'
-      preLoaderRoute: typeof PersianaSolarScreenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/persiana-vertical': {
-      id: '/persiana-vertical'
-      path: '/persiana-vertical'
-      fullPath: '/persiana-vertical'
-      preLoaderRoute: typeof PersianaVerticalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/robots.txt': {
-      id: '/robots.txt'
-      path: '/robots.txt'
-      fullPath: '/robots.txt'
-      preLoaderRoute: typeof RobotsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rolo-blackout-pinpoint': {
-      id: '/rolo-blackout-pinpoint'
-      path: '/rolo-blackout-pinpoint'
-      fullPath: '/rolo-blackout-pinpoint'
-      preLoaderRoute: typeof RoloBlackoutPinpointRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rolo-blackout-texturizado': {
-      id: '/rolo-blackout-texturizado'
-      path: '/rolo-blackout-texturizado'
-      fullPath: '/rolo-blackout-texturizado'
-      preLoaderRoute: typeof RoloBlackoutTexturizadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/simulador': {
-      id: '/simulador'
-      path: '/simulador'
-      fullPath: '/simulador'
-      preLoaderRoute: typeof SimuladorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tela-mosquiteira': {
-      id: '/tela-mosquiteira'
-      path: '/tela-mosquiteira'
-      fullPath: '/tela-mosquiteira'
-      preLoaderRoute: typeof TelaMosquiteiraRouteImport
+    '/trocas-e-devolucoes': {
+      id: '/trocas-e-devolucoes'
+      path: '/trocas-e-devolucoes'
+      fullPath: '/trocas-e-devolucoes'
+      preLoaderRoute: typeof TrocasEDevolucoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/toldos': {
@@ -764,131 +676,173 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToldosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/termos-de-uso': {
+      id: '/termos-de-uso'
+      path: '/termos-de-uso'
+      fullPath: '/termos-de-uso'
+      preLoaderRoute: typeof TermosDeUsoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/catalogo': {
-      id: '/admin/catalogo'
+    '/tela-mosquiteira': {
+      id: '/tela-mosquiteira'
+      path: '/tela-mosquiteira'
+      fullPath: '/tela-mosquiteira'
+      preLoaderRoute: typeof TelaMosquiteiraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulador': {
+      id: '/simulador'
+      path: '/simulador'
+      fullPath: '/simulador'
+      preLoaderRoute: typeof SimuladorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rolo-blackout-texturizado': {
+      id: '/rolo-blackout-texturizado'
+      path: '/rolo-blackout-texturizado'
+      fullPath: '/rolo-blackout-texturizado'
+      preLoaderRoute: typeof RoloBlackoutTexturizadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rolo-blackout-pinpoint': {
+      id: '/rolo-blackout-pinpoint'
+      path: '/rolo-blackout-pinpoint'
+      fullPath: '/rolo-blackout-pinpoint'
+      preLoaderRoute: typeof RoloBlackoutPinpointRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-privacidade': {
+      id: '/politica-de-privacidade'
+      path: '/politica-de-privacidade'
+      fullPath: '/politica-de-privacidade'
+      preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-entrega': {
+      id: '/politica-de-entrega'
+      path: '/politica-de-entrega'
+      fullPath: '/politica-de-entrega'
+      preLoaderRoute: typeof PoliticaDeEntregaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-vertical': {
+      id: '/persiana-vertical'
+      path: '/persiana-vertical'
+      fullPath: '/persiana-vertical'
+      preLoaderRoute: typeof PersianaVerticalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-solar-screen': {
+      id: '/persiana-solar-screen'
+      path: '/persiana-solar-screen'
+      fullPath: '/persiana-solar-screen'
+      preLoaderRoute: typeof PersianaSolarScreenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-rolo-blackout': {
+      id: '/persiana-rolo-blackout'
+      path: '/persiana-rolo-blackout'
+      fullPath: '/persiana-rolo-blackout'
+      preLoaderRoute: typeof PersianaRoloBlackoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-rio-de-janeiro': {
+      id: '/persiana-rio-de-janeiro'
+      path: '/persiana-rio-de-janeiro'
+      fullPath: '/persiana-rio-de-janeiro'
+      preLoaderRoute: typeof PersianaRioDeJaneiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-painel': {
+      id: '/persiana-painel'
+      path: '/persiana-painel'
+      fullPath: '/persiana-painel'
+      preLoaderRoute: typeof PersianaPainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-horizontal': {
+      id: '/persiana-horizontal'
+      path: '/persiana-horizontal'
+      fullPath: '/persiana-horizontal'
+      preLoaderRoute: typeof PersianaHorizontalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-double-vision': {
+      id: '/persiana-double-vision'
+      path: '/persiana-double-vision'
+      fullPath: '/persiana-double-vision'
+      preLoaderRoute: typeof PersianaDoubleVisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persiana-belo-horizonte': {
+      id: '/persiana-belo-horizonte'
+      path: '/persiana-belo-horizonte'
+      fullPath: '/persiana-belo-horizonte'
+      preLoaderRoute: typeof PersianaBeloHorizonteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cortina-romana': {
+      id: '/cortina-romana'
+      path: '/cortina-romana'
+      fullPath: '/cortina-romana'
+      preLoaderRoute: typeof CortinaRomanaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalogo': {
+      id: '/catalogo'
       path: '/catalogo'
-      fullPath: '/admin/catalogo'
-      preLoaderRoute: typeof AdminCatalogoRouteImport
-      parentRoute: typeof AdminRoute
+      fullPath: '/catalogo'
+      preLoaderRoute: typeof CatalogoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/categorias': {
-      id: '/admin/categorias'
-      path: '/categorias'
-      fullPath: '/admin/categorias'
-      preLoaderRoute: typeof AdminCategoriasRouteImport
-      parentRoute: typeof AdminRoute
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/configuracoes': {
-      id: '/admin/configuracoes'
-      path: '/configuracoes'
-      fullPath: '/admin/configuracoes'
-      preLoaderRoute: typeof AdminConfiguracoesRouteImport
-      parentRoute: typeof AdminRoute
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/financeiro': {
-      id: '/admin/financeiro'
-      path: '/financeiro'
-      fullPath: '/admin/financeiro'
-      preLoaderRoute: typeof AdminFinanceiroRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/ia': {
-      id: '/admin/ia'
-      path: '/ia'
-      fullPath: '/admin/ia'
-      preLoaderRoute: typeof AdminIaRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/imagens': {
-      id: '/admin/imagens'
-      path: '/imagens'
-      fullPath: '/admin/imagens'
-      preLoaderRoute: typeof AdminImagensRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/integracoes': {
-      id: '/admin/integracoes'
-      path: '/integracoes'
-      fullPath: '/admin/integracoes'
-      preLoaderRoute: typeof AdminIntegracoesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/leads': {
-      id: '/admin/leads'
-      path: '/leads'
-      fullPath: '/admin/leads'
-      preLoaderRoute: typeof AdminLeadsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/lumi': {
-      id: '/admin/lumi'
-      path: '/lumi'
-      fullPath: '/admin/lumi'
-      preLoaderRoute: typeof AdminLumiRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/lumi-config': {
-      id: '/admin/lumi-config'
-      path: '/lumi-config'
-      fullPath: '/admin/lumi-config'
-      preLoaderRoute: typeof AdminLumiConfigRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/marketing': {
-      id: '/admin/marketing'
-      path: '/marketing'
-      fullPath: '/admin/marketing'
-      preLoaderRoute: typeof AdminMarketingRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/orcamentos': {
-      id: '/admin/orcamentos'
-      path: '/orcamentos'
-      fullPath: '/admin/orcamentos'
-      preLoaderRoute: typeof AdminOrcamentosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/pedidos': {
-      id: '/admin/pedidos'
-      path: '/pedidos'
-      fullPath: '/admin/pedidos'
-      preLoaderRoute: typeof AdminPedidosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/producao': {
-      id: '/admin/producao'
-      path: '/producao'
-      fullPath: '/admin/producao'
-      preLoaderRoute: typeof AdminProducaoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/relatorios': {
-      id: '/admin/relatorios'
-      path: '/relatorios'
-      fullPath: '/admin/relatorios'
-      preLoaderRoute: typeof AdminRelatoriosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/site': {
-      id: '/admin/site'
-      path: '/site'
-      fullPath: '/admin/site'
-      preLoaderRoute: typeof AdminSiteRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/usuarios': {
-      id: '/admin/usuarios'
-      path: '/usuarios'
-      fullPath: '/admin/usuarios'
-      preLoaderRoute: typeof AdminUsuariosRouteImport
-      parentRoute: typeof AdminRoute
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blog/': {
       id: '/blog/'
@@ -897,18 +851,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/categoria/$slug': {
-      id: '/categoria/$slug'
-      path: '/categoria/$slug'
-      fullPath: '/categoria/$slug'
-      preLoaderRoute: typeof CategoriaSlugRouteImport
+    '/produto/$slug': {
+      id: '/produto/$slug'
+      path: '/produto/$slug'
+      fullPath: '/produto/$slug'
+      preLoaderRoute: typeof ProdutoSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pedido/$numero': {
@@ -918,12 +872,138 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PedidoNumeroRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/produto/$slug': {
-      id: '/produto/$slug'
-      path: '/produto/$slug'
-      fullPath: '/produto/$slug'
-      preLoaderRoute: typeof ProdutoSlugRouteImport
+    '/categoria/$slug': {
+      id: '/categoria/$slug'
+      path: '/categoria/$slug'
+      fullPath: '/categoria/$slug'
+      preLoaderRoute: typeof CategoriaSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/usuarios': {
+      id: '/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AdminUsuariosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/site': {
+      id: '/admin/site'
+      path: '/site'
+      fullPath: '/admin/site'
+      preLoaderRoute: typeof AdminSiteRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/relatorios': {
+      id: '/admin/relatorios'
+      path: '/relatorios'
+      fullPath: '/admin/relatorios'
+      preLoaderRoute: typeof AdminRelatoriosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/producao': {
+      id: '/admin/producao'
+      path: '/producao'
+      fullPath: '/admin/producao'
+      preLoaderRoute: typeof AdminProducaoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pedidos': {
+      id: '/admin/pedidos'
+      path: '/pedidos'
+      fullPath: '/admin/pedidos'
+      preLoaderRoute: typeof AdminPedidosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/orcamentos': {
+      id: '/admin/orcamentos'
+      path: '/orcamentos'
+      fullPath: '/admin/orcamentos'
+      preLoaderRoute: typeof AdminOrcamentosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/marketing': {
+      id: '/admin/marketing'
+      path: '/marketing'
+      fullPath: '/admin/marketing'
+      preLoaderRoute: typeof AdminMarketingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lumi-config': {
+      id: '/admin/lumi-config'
+      path: '/lumi-config'
+      fullPath: '/admin/lumi-config'
+      preLoaderRoute: typeof AdminLumiConfigRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lumi': {
+      id: '/admin/lumi'
+      path: '/lumi'
+      fullPath: '/admin/lumi'
+      preLoaderRoute: typeof AdminLumiRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/integracoes': {
+      id: '/admin/integracoes'
+      path: '/integracoes'
+      fullPath: '/admin/integracoes'
+      preLoaderRoute: typeof AdminIntegracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/imagens': {
+      id: '/admin/imagens'
+      path: '/imagens'
+      fullPath: '/admin/imagens'
+      preLoaderRoute: typeof AdminImagensRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/ia': {
+      id: '/admin/ia'
+      path: '/ia'
+      fullPath: '/admin/ia'
+      preLoaderRoute: typeof AdminIaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/financeiro': {
+      id: '/admin/financeiro'
+      path: '/financeiro'
+      fullPath: '/admin/financeiro'
+      preLoaderRoute: typeof AdminFinanceiroRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/categorias': {
+      id: '/admin/categorias'
+      path: '/categorias'
+      fullPath: '/admin/categorias'
+      preLoaderRoute: typeof AdminCategoriasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/catalogo': {
+      id: '/admin/catalogo'
+      path: '/catalogo'
+      fullPath: '/admin/catalogo'
+      preLoaderRoute: typeof AdminCatalogoRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/api/public/asaas-webhook': {
       id: '/api/public/asaas-webhook'
@@ -995,13 +1075,17 @@ const rootRouteChildren: RootRouteChildren = {
   PersianaRoloBlackoutRoute: PersianaRoloBlackoutRoute,
   PersianaSolarScreenRoute: PersianaSolarScreenRoute,
   PersianaVerticalRoute: PersianaVerticalRoute,
+  PoliticaDeEntregaRoute: PoliticaDeEntregaRoute,
+  PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   RoloBlackoutPinpointRoute: RoloBlackoutPinpointRoute,
   RoloBlackoutTexturizadoRoute: RoloBlackoutTexturizadoRoute,
   SimuladorRoute: SimuladorRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TelaMosquiteiraRoute: TelaMosquiteiraRoute,
+  TermosDeUsoRoute: TermosDeUsoRoute,
   ToldosRoute: ToldosRoute,
+  TrocasEDevolucoesRoute: TrocasEDevolucoesRoute,
   BlogSlugRoute: BlogSlugRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
   PedidoNumeroRoute: PedidoNumeroRoute,

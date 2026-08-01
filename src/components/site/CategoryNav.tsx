@@ -62,6 +62,8 @@ export function CategoryNav() {
     cancelClose();
     setOpenId(id);
     setHoverSubId(null);
+    const first = visibleCats.find((c) => c.parent_id === id && visibleCats.some((g) => g.parent_id === c.id));
+    setExpandedSubs(first ? [first.id] : []);
   };
   const closeAll = () => {
     cancelClose();
